@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAFFARHA.YE | Pitch Deck 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@500;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #071938;
+      --blue: #0b4f8a;
+      --cyan: #06b6d4;
+      --teal: #0d9488;
+      --orange: #f97316;
+      --violet: #7c3aed;
+      --paper: #eef4fb;
+      --line: #d5e3f4;
+      --night-a: #061430;
+      --night-b: #0f2f62;
+      --night-c: #143d75;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      font-size: 14.5px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 6%, rgba(6, 182, 212, 0.14), transparent 26%),
+        radial-gradient(circle at 92% 18%, rgba(249, 115, 22, 0.12), transparent 28%),
+        radial-gradient(circle at 18% 86%, rgba(13, 148, 136, 0.1), transparent 30%),
+        var(--paper);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: "Changa", sans-serif;
+      letter-spacing: 0.1px;
+    }
+
+    .wrap {
+      width: min(1320px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 66px;
+      z-index: 140;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+      transition: box-shadow 0.25s ease;
+    }
+
+    .nav.scrolled { box-shadow: 0 10px 26px rgba(2, 6, 23, 0.09); }
+
+    .nav-link {
+      text-decoration: none;
+      color: #334155;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover { color: #0a67ac; }
+
+    .btn-print {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.48rem 0.92rem;
+      color: #fff;
+      background: linear-gradient(110deg, var(--blue), var(--cyan));
+      font-family: "Tajawal", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .slide {
+      min-height: 90vh;
+      padding: 5.1rem 0 2.8rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .slide.alt {
+      background: linear-gradient(180deg, #eaf3ff 0%, var(--paper) 100%);
+    }
+
+    .slide-num {
+      position: absolute;
+      left: 1.2rem;
+      top: 1rem;
+      font-size: 0.75rem;
+      color: rgba(100, 116, 139, 0.58);
+      font-weight: 800;
+      font-family: "Changa", sans-serif;
+    }
+
+    .surface {
+      border-radius: 1.2rem;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 20px 52px -30px rgba(15, 23, 42, 0.24);
+    }
+
+    .surface-dark {
+      border-radius: 1.2rem;
+      border: 1px solid rgba(147, 197, 253, 0.22);
+      background: linear-gradient(140deg, var(--night-a), var(--night-b) 52%, var(--night-c));
+      color: #e2e8f0;
+      box-shadow: 0 28px 68px -32px rgba(2, 6, 23, 0.62);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .surface-dark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.36rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #0c4a6e;
+      border-radius: 999px;
+      border: 1px solid #bae6fd;
+      background: #ecfeff;
+      padding: 0.34rem 0.72rem;
+      letter-spacing: 0.7px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.85rem, 5vw, 3.45rem);
+      line-height: 1.2;
+      margin: 0.85rem 0 1rem;
+    }
+
+    .hero-grad {
+      background: linear-gradient(105deg, #0ea5e9, #5b8cff 48%, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title {
+      font-size: clamp(1.3rem, 2.3vw, 2rem);
+      margin-bottom: 0.38rem;
+    }
+
+    .sub {
+      color: #475569;
+      line-height: 1.78;
+      font-size: 0.94rem;
+    }
+
+    .sub-dark {
+      color: #cbd5e1;
+      line-height: 1.8;
+      font-size: 0.9rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.34rem;
+      border-radius: 999px;
+      padding: 0.32rem 0.66rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .metric {
+      border-radius: 0.95rem;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: #fff;
+      padding: 0.8rem;
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      font-family: "Changa", sans-serif;
+      font-size: 1.4rem;
+      line-height: 1;
+      margin-bottom: 0.14rem;
+    }
+
+    .rule {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.92rem;
+      padding: 0.82rem;
+      background: #fff;
+    }
+
+    .rule h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .rule p {
+      margin: 0.4rem 0 0;
+      font-size: 0.84rem;
+      line-height: 1.72;
+      color: #64748b;
+    }
+
+    .img-box {
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 16px 42px -24px rgba(0, 0, 0, 0.2);
+    }
+
+    .img-box img {
+      width: 100%;
+      display: block;
+    }
+
+    .phone {
+      border: 7px solid #1e293b;
+      border-radius: 2rem;
+      overflow: hidden;
+      width: 292px;
+      margin: 0 auto;
+      background: #f8fafc;
+      box-shadow: 0 22px 28px -6px rgba(0, 0, 0, 0.14);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.18rem 0.52rem;
+      font-size: 0.64rem;
+      font-weight: 800;
+    }
+
+    .tag-product { background: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe; }
+    .tag-voucher { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+    .tag-expired { background: #e5e7eb; color: #334155; border: 1px solid #cbd5e1; }
+
+    .state-flow {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.8rem;
+      overflow-x: auto;
+    }
+
+    .state-track {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-width: 650px;
+    }
+
+    .state-node {
+      min-width: 145px;
+      border-radius: 0.78rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #f8fafc;
+    }
+
+    .state-arrow {
+      min-width: 26px;
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .journey {
+      border-radius: 1rem;
+      border: 1px solid #d6ddfb;
+      background: #fff;
+      padding: 0.9rem;
+    }
+
+    .journey-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.56rem;
+      overflow-x: auto;
+      padding-bottom: 0.2rem;
+    }
+
+    .journey-node {
+      min-width: 170px;
+      border-radius: 0.82rem;
+      border: 1px solid #dbe4f8;
+      background: #f8fbff;
+      padding: 0.72rem;
+      text-align: center;
+    }
+
+    .journey-node strong {
+      display: block;
+      font-size: 0.9rem;
+      color: #0f172a;
+      margin-top: 0.2rem;
+    }
+
+    .journey-node small {
+      display: block;
+      font-size: 0.74rem;
+      margin-top: 0.16rem;
+      color: #64748b;
+    }
+
+    .journey-arrow {
+      min-width: 34px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .ops-step {
+      border-radius: 0.86rem;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      padding: 0.7rem;
+      text-align: center;
+      position: relative;
+      font-size: 0.78rem;
+    }
+
+    .phase {
+      position: absolute;
+      top: -10px;
+      right: 50%;
+      transform: translateX(50%);
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 0.14rem 0.48rem;
+      border: 1px solid #cbd5e1;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .ai-chat {
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      background: linear-gradient(145deg, #0a1f48, #16295d);
+      padding: 1rem;
+      color: #e2e8f0;
+    }
+
+    .bubble {
+      border-radius: 1rem;
+      padding: 0.72rem;
+      font-size: 0.84rem;
+      line-height: 1.7;
+      margin-bottom: 0.58rem;
+    }
+
+    .bubble.user { background: rgba(148, 163, 184, 0.18); }
+    .bubble.ai { background: rgba(14, 165, 233, 0.18); border: 1px solid rgba(125, 211, 252, 0.28); }
+    .bubble.copy { background: rgba(124, 58, 237, 0.25); border: 1px solid rgba(196, 181, 253, 0.28); }
+
+    .arch-board {
+      border-radius: 1.12rem;
+      border: 1px solid #d8e4f7;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(6,182,212,0.08), transparent 25%),
+        radial-gradient(circle at 90% 85%, rgba(124,58,237,0.08), transparent 24%),
+        #ffffff;
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .arch-layer {
+      display: grid;
+      gap: 0.62rem;
+    }
+
+    .arch-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .arch-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .arch-node {
+      border-radius: 0.82rem;
+      border: 1px solid #dbe4f8;
+      padding: 0.62rem;
+      text-align: center;
+      background: #f8fbff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1e293b;
+      min-height: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.15rem;
+    }
+
+    .arch-node small {
+      font-size: 0.66rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .arch-node.gateway {
+      background: #edf7ff;
+      border: 1px solid #7dd3fc;
+      color: #0c4a6e;
+      min-height: 84px;
+      font-size: 0.9rem;
+    }
+
+    .arch-node.service {
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      color: #5b21b6;
+    }
+
+    .arch-node.data {
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      color: #0e7490;
+    }
+
+    .arch-node.integration {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+    }
+
+    .arch-sep {
+      height: 24px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arch-sep::before {
+      content: "";
+      width: 2px;
+      height: 24px;
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    .arch-sep::after {
+      content: "▼";
+      position: absolute;
+      bottom: -6px;
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .arch-inline {
+      margin: 0.45rem 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #cbd5e1 16%, #cbd5e1 84%, transparent);
+      position: relative;
+    }
+
+    .arch-inline::before,
+    .arch-inline::after {
+      content: "◀";
+      position: absolute;
+      top: -7px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .arch-inline::before { left: 20%; }
+    .arch-inline::after { right: 20%; }
+
+    .chart-box {
+      border-radius: 1rem;
+      border: 1px solid #dbe4f8;
+      background: #fff;
+      padding: 0.8rem;
+    }
+
+    .chart-md {
+      width: 100%;
+      height: 260px;
+    }
+
+    .page-link {
+      display: block;
+      text-decoration: none;
+      color: #334155;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      border-radius: 0.78rem;
+      padding: 0.58rem 0.66rem;
+      transition: all 0.2s ease;
+      word-break: break-word;
+    }
+
+    .page-link:hover {
+      border-color: #7dd3fc;
+      background: #f0f9ff;
+      color: #0c4a6e;
+      transform: translateY(-1px);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.72s ease, transform 0.72s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.11;
+      animation: float-p 12s ease-in-out infinite;
+    }
+
+    @keyframes float-p {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @media (max-width: 1024px) {
+      .arch-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .arch-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .arch-node.gateway { grid-column: span 2; }
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 14px; }
+      .slide { min-height: auto; padding: 4.9rem 0 2.1rem; }
+      .phone { width: 262px; }
+      .arch-3, .arch-4 { grid-template-columns: 1fr; }
+      .arch-node.gateway { grid-column: auto; }
+    }
+
+    @media print {
+      .nav, .no-print, .particle { display: none !important; }
+      .slide { min-height: auto; padding: 1.3rem 0; page-break-inside: avoid; }
+      .surface, .surface-dark { box-shadow: none; }
+      body { background: #fff; }
+    }
+  </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+<body>
+
+<header class="nav" id="navBar">
+  <div class="wrap h-full flex items-center justify-between gap-3">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 text-white font-black flex items-center justify-center text-base">W</div>
+      <strong class="text-slate-900 tracking-tight text-lg">WAFFARHA<span class="text-orange-500">.YE</span></strong>
+    </div>
+
+    <nav class="hidden 2xl:flex items-center gap-4">
+      <a class="nav-link" href="#cover">الرؤية</a>
+      <a class="nav-link" href="#opportunity">الفرصة</a>
+      <a class="nav-link" href="#product">المنتج</a>
+      <a class="nav-link" href="#myorders">مشترياتي</a>
+      <a class="nav-link" href="#escrow">Escrow</a>
+      <a class="nav-link" href="#merchant">التاجر</a>
+      <a class="nav-link" href="#ai">الذكاء</a>
+      <a class="nav-link" href="#architecture">المعمارية</a>
+      <a class="nav-link" href="#gallery">المعرض</a>
+      <a class="nav-link" href="#pages">الصفحات</a>
+    </nav>
+
+    <div class="no-print flex items-center gap-2">
+      <a href="Waffarha_Print_2026.html" class="text-xs font-bold text-slate-600 hover:text-blue-700 hidden md:inline">نسخة الطباعة</a>
+      <button class="btn-print" onclick="window.print()">تصدير PDF</button>
+    </div>
+  </div>
+</header>
+
+<section id="cover" class="slide">
+  <span class="slide-num">01 / 10</span>
+  <div class="particle w-32 h-32 bg-cyan-400 top-[11%] right-[8%]"></div>
+  <div class="particle w-24 h-24 bg-orange-400 bottom-[14%] left-[11%]" style="animation-delay: 3.1s;"></div>
+
+  <div class="wrap reveal">
+    <div class="surface-dark p-6 md:p-8">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-7 items-center relative z-10">
+        <div>
+          <span class="kicker"><i class="ph ph-presentation-chart"></i> Pitch Deck | نسخة تنفيذية بصرية</span>
+          <h1 class="hero-title">منصة <span class="hero-grad">وفرها اليمن</span><br>توحيد القسائم والمنتجات في تجربة شراء آمنة</h1>
+          <p class="sub-dark mb-5">
+            نموذج عرض احترافي يجمع كل مكوّنات المشروع في شاشة واحدة: تطبيق عميل واضح، منظومة تاجر تشغيلية،
+            خوارزمية Escrow لحماية الطرفين، وطبقة ذكاء اصطناعي لرفع التحويل وجودة المحتوى.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="chip bg-cyan-100 text-cyan-900"><i class="ph ph-ticket"></i> قسائم وخدمات</span>
+            <span class="chip bg-purple-100 text-purple-800"><i class="ph ph-package"></i> سوق منتجات</span>
+            <span class="chip bg-yellow-100 text-yellow-900"><i class="ph ph-lock-key-open"></i> ضمان مالي</span>
+            <span class="chip bg-emerald-100 text-emerald-800"><i class="ph ph-sparkle"></i> Gemini AI</span>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="metric"><strong class="text-blue-700">3</strong><small class="text-slate-500 font-bold">واجهات أساسية</small></div>
+            <div class="metric"><strong class="text-cyan-700">4</strong><small class="text-slate-500 font-bold">تدفقات حاكمة</small></div>
+            <div class="metric"><strong class="text-violet-700">10</strong><small class="text-slate-500 font-bold">شرائح عرض</small></div>
+            <div class="metric"><strong class="text-orange-600">24/7</strong><small class="text-slate-500 font-bold">جاهزية تشغيل</small></div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="img-box"><img src="assets/waffarha-hero.svg" alt="واجهة العرض الرئيسية"></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="rule bg-white/95 border-cyan-100">
+              <h4 class="text-cyan-900">منظور العميل</h4>
+              <p>شراء، إهداء، متابعة حالة القسيمة أو المنتج بدون تعقيد.</p>
+            </div>
+            <div class="rule bg-white/95 border-orange-100">
+              <h4 class="text-orange-900">منظور التاجر</h4>
+              <p>إدارة مخزون وسيناريو استلام سريع مع تأكيد تسليم موثق.</p>
+            </div>
+            <div class="rule bg-white/95 border-purple-100">
+              <h4 class="text-purple-900">منظور المنصة</h4>
+              <p>تسويات Escrow مؤتمتة + رقابة تشغيلية + بيانات قرار.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="opportunity" class="slide alt">
+  <span class="slide-num">02 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div>
+          <h2 class="title">الفرصة السوقية ولماذا الآن</h2>
+          <p class="sub mb-4">انتقال سلوك المستخدم من البحث التقليدي إلى قرار شراء سريع داخل تطبيقات موثوقة محلياً.</p>
+
+          <div class="space-y-3 text-sm">
+            <div class="rule bg-cyan-50 border-cyan-100">
+              <h4 class="text-cyan-900">مشكلة متكررة</h4>
+              <p>خلط القسائم مع الطلبات الملموسة يربك المستخدم والتاجر ويؤدي لانخفاض الاكتمال.</p>
+            </div>
+            <div class="rule bg-blue-50 border-blue-100">
+              <h4 class="text-blue-900">التميّز</h4>
+              <p>فصل مسارات التجربة: QR للقسائم، وPickup Code للمنتجات، مع ضمان مالي حتى الاستلام.</p>
+            </div>
+            <div class="rule bg-emerald-50 border-emerald-100">
+              <h4 class="text-emerald-900">قيمة مباشرة</h4>
+              <p>ثقة أعلى + تقليل النزاعات + قابلية توسع أسرع عبر نموذج تشغيل واضح.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="chart-box">
+            <h3 class="text-center text-sm font-extrabold text-slate-800 mb-2">القطاعات الأكثر طلبًا</h3>
+            <div class="chart-md"><canvas id="sectorChart"></canvas></div>
+          </div>
+          <div class="chart-box">
+            <h3 class="text-center text-sm font-extrabold text-slate-800 mb-2">مزيج مصادر الإيراد</h3>
+            <div class="chart-md"><canvas id="mixChart"></canvas></div>
+          </div>
+          <div class="rule bg-white md:col-span-2">
+            <h4 class="text-slate-900">فرضية النمو</h4>
+            <p>عند توحيد القسائم + سوق المنتجات + AI Copilot داخل هوية تشغيل واحدة، ترتفع نسبة إكمال رحلة الشراء وينخفض التسرب في نقطة الدفع والاستلام.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="product" class="slide">
+  <span class="slide-num">03 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <h2 class="title">منظومة المنتج: 4 محركات داخل منصة واحدة</h2>
+      <p class="sub mb-5">تصميم موحد يجمع العرض التجاري والحوكمة التقنية داخل رحلة متكاملة.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-5">
+        <div class="rule bg-slate-50">
+          <h4 class="text-blue-900"><i class="ph ph-device-mobile"></i> تطبيق العميل</h4>
+          <p>اكتشاف العروض، البحث الذكي، إدارة المشتريات، واستخدام الأكواد.</p>
+        </div>
+        <div class="rule bg-slate-50">
+          <h4 class="text-orange-900"><i class="ph ph-storefront"></i> تطبيق التاجر</h4>
+          <p>رفع المنتجات والعروض، إدارة المخزون، وتأكيد التسليم.</p>
+        </div>
+        <div class="rule bg-slate-50">
+          <h4 class="text-purple-900"><i class="ph ph-lock-key"></i> Escrow Engine</h4>
+          <p>حجز الأموال مؤقتًا مع تحرير آلي بعد تحقق الاستلام.</p>
+        </div>
+        <div class="rule bg-slate-50">
+          <h4 class="text-cyan-900"><i class="ph ph-sparkle"></i> AI Layer</h4>
+          <p>اقتراح عروض للعميل وصناعة وصف إعلاني تلقائي للتاجر.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div class="img-box"><img src="assets/waffarha-ecosystem.svg" alt="نظام وفرها البيئي"></div>
+        <div class="img-box"><img src="img/app-home.png" alt="الشاشة الرئيسية للتطبيق"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="myorders" class="slide alt">
+  <span class="slide-num">04 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <h2 class="title">محاكاة حقيقية لشاشة "مشترياتي"</h2>
+      <p class="sub mb-5">تفريق بصري ووظيفي واضح بين المنتج والقسيمة والحالة المنتهية لتقليل اللبس ورفع معدل الإتمام.</p>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-7 items-start">
+        <div class="phone p-4">
+          <div class="h-6 w-28 rounded-b-xl bg-slate-900 mx-auto mb-3"></div>
+          <h3 class="text-center text-xl font-black text-slate-800 mb-3">مشترياتي</h3>
+
+          <div class="bg-slate-100 p-1 rounded-lg flex text-xs mb-4">
+            <button class="flex-1 bg-white rounded-md py-1.5 font-bold text-blue-700">الكل</button>
+            <button class="flex-1 py-1.5 text-slate-500">القسائم</button>
+            <button class="flex-1 py-1.5 text-slate-500">المنتجات</button>
+          </div>
+
+          <div class="bg-white border border-purple-200 rounded-xl p-3 mb-3 relative">
+            <span class="tag tag-product absolute top-2 left-2">استلام منتج</span>
+            <div class="pt-5">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="font-bold text-slate-900 text-sm">MacBook Air M2</div>
+                  <div class="text-[11px] text-slate-500 mt-1">عالم التقنية - شارع حدة</div>
+                </div>
+                <i class="ph ph-laptop text-2xl text-slate-400"></i>
+              </div>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="text-[11px] font-bold text-blue-700">مدفوع (ضمان)</span>
+                <button class="text-[11px] bg-purple-600 text-white px-2 py-1 rounded-lg">كود الاستلام</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-orange-200 rounded-xl p-3 mb-3 relative">
+            <span class="tag tag-voucher absolute top-2 left-2">قسيمة</span>
+            <div class="pt-5">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="font-bold text-slate-900 text-sm">وجبة عائلية (5 أشخاص)</div>
+                  <div class="text-[11px] text-slate-500 mt-1">مطعم البيت الصنعاني</div>
+                </div>
+                <i class="ph ph-pizza text-2xl text-slate-400"></i>
+              </div>
+              <div class="mt-3 flex items-center justify-between">
+                <button class="text-[11px] bg-blue-600 text-white px-2 py-1 rounded-lg">QR Code</button>
+                <button class="text-[11px] bg-orange-500 text-white px-2 py-1 rounded-lg">الإهداء</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-300 rounded-xl p-3 relative">
+            <span class="tag tag-expired absolute top-2 left-2">منتهي</span>
+            <div class="pt-5">
+              <div class="font-bold text-slate-500 text-sm">عرض سابق منتهي الصلاحية</div>
+              <div class="text-[11px] text-slate-400 mt-1">مرجعي فقط - غير قابل للتفعيل</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-sm">
+          <div class="rule bg-purple-50 border-purple-100">
+            <h4 class="text-purple-900">المنتج (بنفسجي)</h4>
+            <p>حالة "مدفوع (ضمان)" مع زر "كود الاستلام". هذا المسار مرتبط بتحديث مخزون وتسوية Escrow.</p>
+          </div>
+          <div class="rule bg-orange-50 border-orange-100">
+            <h4 class="text-orange-900">القسيمة (برتقالي)</h4>
+            <p>زر QR للاستخدام المباشر + زر الإهداء لمشاركة القسيمة كرابط مملوك للمستلم.</p>
+          </div>
+          <div class="rule bg-slate-50 border-slate-200">
+            <h4 class="text-slate-900">المنتهي (رمادي)</h4>
+            <p>عرض واضح للحالات غير النشطة لمنع الالتباس وعدم إظهار أزرار تشغيل.</p>
+          </div>
+          <div class="img-box"><img src="img/app-purchases.png" alt="شاشة مشترياتي الفعلية"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="escrow" class="slide">
+  <span class="slide-num">05 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface-dark p-6 md:p-8">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 relative z-10">
+        <div>
+          <h2 class="title text-slate-100">قلب المنصة: Escrow Logic</h2>
+          <p class="sub-dark mb-3">منطق العمل: Hold -> Verify -> Release لضمان حق العميل والتاجر.</p>
+
+          <ol class="space-y-2 text-sm text-slate-100 mb-4">
+            <li>1. عند الدفع، ينتقل المبلغ إلى محفظة حجز آمنة.</li>
+            <li>2. الطلب يظهر للتاجر بحالة "مدفوع - بانتظار الاستلام".</li>
+            <li>3. مسح Pickup Code يطلق عملية التحقق والتحرير.</li>
+            <li>4. معالجة النزاع متاحة قبل الإغلاق النهائي للحالة.</li>
+          </ol>
+
+          <div class="state-flow">
+            <div class="text-xs font-bold text-slate-300 mb-2 text-center">تدفق الحالة (Order State Machine)</div>
+            <div class="state-track">
+              <div class="state-node" style="background:#16a34a33;">COMPLETED</div>
+              <div class="state-arrow">◀</div>
+              <div class="state-node" style="background:#2563eb33;">Ready to Pickup</div>
+              <div class="state-arrow">◀</div>
+              <div class="state-node" style="background:#d9770633;">PAID (Escrow)</div>
+              <div class="state-arrow">◀</div>
+              <div class="state-node" style="background:#33415566;">Created</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey">
+          <h3 class="text-center text-xl font-bold text-slate-900 mb-3">مخطط التدفق المالي</h3>
+          <div class="journey-strip mb-4">
+            <div class="journey-node" style="background:#eff6ff;border-color:#bfdbfe;">
+              <i class="ph ph-user text-blue-600 text-xl"></i>
+              <strong>محفظة العميل</strong>
+              <small class="text-red-600 font-bold">- 50,000 ريال</small>
+            </div>
+            <div class="journey-arrow">◀</div>
+            <div class="journey-node">
+              <i class="ph ph-bank text-slate-600 text-xl"></i>
+              <strong>بوابة الدفع</strong>
+              <small>الكريمي / OneCash</small>
+            </div>
+            <div class="journey-arrow">◀</div>
+            <div class="journey-node" style="background:#fef9c3;border-color:#fde047;">
+              <i class="ph ph-lock-key text-yellow-600 text-xl"></i>
+              <strong>محفظة الحجز</strong>
+              <small class="text-blue-700 font-bold">50,000 ريال (معلقة)</small>
+            </div>
+            <div class="journey-arrow">◀</div>
+            <div class="journey-node" style="background:#ecfdf5;border-color:#bbf7d0;">
+              <i class="ph ph-wallet text-emerald-600 text-xl"></i>
+              <strong>محفظة التاجر</strong>
+              <small class="text-emerald-700 font-bold">+ 45,000 ريال</small>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+            <div class="rule bg-slate-50 border-slate-200">
+              <h4 class="text-slate-900">Atomic Transaction</h4>
+              <p>قفل المخزون وإنشاء الطلب في نفس المعاملة.</p>
+            </div>
+            <div class="rule bg-slate-50 border-slate-200">
+              <h4 class="text-slate-900">Dispute Guard</h4>
+              <p>نافذة مراجعة قبل الإغلاق النهائي للحالة.</p>
+            </div>
+            <div class="rule bg-slate-50 border-slate-200">
+              <h4 class="text-slate-900">عمولة المنصة</h4>
+              <p>توزيع ثابت وشفاف حسب سياسة التشغيل.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="merchant" class="slide alt">
+  <span class="slide-num">06 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <h2 class="title">عمليات التاجر: من الطلب إلى التأكيد</h2>
+      <p class="sub mb-5">تدفق تشغيل واضح وقابل للتدقيق داخل لوحة التاجر.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-5">
+        <div class="ops-step">
+          <span class="phase">مرحلة 1</span>
+          <div class="font-bold text-sm mt-2">استلام الطلب</div>
+          <p class="text-xs text-slate-500 mt-2">ظهور الطلب بحالة مدفوع وقابل للتجهيز.</p>
+          <div class="text-emerald-600 mt-2">⬇</div>
+        </div>
+        <div class="ops-step border-blue-200 bg-blue-50/40">
+          <span class="phase" style="background:#dbeafe;border-color:#bfdbfe;color:#1d4ed8;">مرحلة 2</span>
+          <div class="font-bold text-sm mt-2">تجهيز العنصر</div>
+          <p class="text-xs text-slate-500 mt-2">تأكيد جاهزية المنتج وتنبيه العميل.</p>
+          <div class="text-blue-600 mt-2 text-xs font-bold">Push Notification</div>
+        </div>
+        <div class="ops-step border-purple-200 bg-purple-50/45">
+          <span class="phase" style="background:#ede9fe;border-color:#ddd6fe;color:#6d28d9;">مرحلة 3</span>
+          <div class="font-bold text-sm mt-2">التحقق بالمسح</div>
+          <p class="text-xs text-slate-500 mt-2">قراءة Pickup Code من التطبيق.</p>
+          <div class="text-purple-700 mt-2 text-xs font-bold">Verification Event</div>
+        </div>
+        <div class="ops-step border-amber-300 bg-amber-50/60">
+          <span class="phase" style="background:#facc15;border-color:#f59e0b;color:#fff;">مرحلة 4</span>
+          <div class="font-bold text-sm mt-2">تحديث الحالة</div>
+          <p class="text-xs text-slate-500 mt-2">إغلاق الطلب كمكتمل وتحديث السجلات.</p>
+          <div class="text-amber-700 mt-2 text-xs font-bold">Release Triggered</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div class="img-box"><img src="img/merchant-panel.png" alt="لوحة التاجر"></div>
+        <div class="img-box"><img src="assets/merchant-ops-ui.svg" alt="مشهد عمليات التاجر"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ai" class="slide">
+  <span class="slide-num">07 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 items-start">
+        <div class="ai-chat">
+          <div class="text-cyan-200 text-xs font-bold mb-2">Powered by Gemini</div>
+          <div class="bubble user">أنشئ عرض غداء عائلي في صنعاء بسعر مناسب.</div>
+          <div class="bubble ai">لقيت لك عرض ممتاز من "مطعم البيت الصنعاني": خصم 30% على وجبة العائلة.</div>
+          <div class="bubble user">اكتب لي إعلان لساعة ذكية بخصم 50%.</div>
+          <div class="bubble copy">جاهز للتوفير: ساعة ذكية أصلية بنص السعر، لفترة محدودة احجز الآن قبل نفاد الكمية.</div>
+          <div class="text-xs text-cyan-100 mt-2">هذه الطبقة ترفع جودة المحتوى وتسرع قرار الشراء.</div>
+        </div>
+
+        <div class="space-y-3">
+          <h2 class="title">الابتكار بالذكاء الاصطناعي (Gemini)</h2>
+          <p class="sub">ميزة جوهرية في المنصة: مساعد مستخدم لاكتشاف العروض، ومساعد تاجر لصياغة محتوى بيعي محلي الهوية.</p>
+
+          <div class="rule bg-blue-50 border-blue-100">
+            <h4 class="text-blue-900"><i class="ph ph-chat-centered-text"></i> مساعد المستخدم</h4>
+            <p>استعلام طبيعي باللهجة المحلية لإيجاد عروض أقرب للسياق والسعر المطلوب.</p>
+          </div>
+
+          <div class="rule bg-indigo-50 border-indigo-100">
+            <h4 class="text-indigo-900"><i class="ph ph-pencil-line"></i> مساعد التاجر</h4>
+            <p>توليد وصف تسويقي تلقائي للمنتجات والعروض مع نبرة بيع مباشرة.</p>
+          </div>
+
+          <div class="rule bg-slate-950 text-slate-100 border-slate-700">
+            <h4 class="text-sky-300">API Endpoint</h4>
+            <p class="text-slate-300 font-mono">POST /api/v1/ai/generate-description</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="architecture" class="slide alt">
+  <span class="slide-num">08 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <h2 class="title">المخطط المعماري المرسوم داخل العرض</h2>
+      <p class="sub mb-5">معمارية طبقية واضحة تربط قنوات الاستخدام بخدمات المنصة والتكاملات الخارجية.</p>
+
+      <div class="arch-board">
+        <div class="arch-layer arch-3">
+          <div class="arch-node">
+            <i class="ph ph-device-mobile text-xl text-blue-600"></i>
+            تطبيق العميل
+            <small>Flutter App</small>
+          </div>
+          <div class="arch-node">
+            <i class="ph ph-storefront text-xl text-orange-600"></i>
+            تطبيق التاجر
+            <small>Merchant Web/App</small>
+          </div>
+          <div class="arch-node">
+            <i class="ph ph-monitor text-xl text-slate-600"></i>
+            لوحة الإدارة
+            <small>Admin Console</small>
+          </div>
+        </div>
+
+        <div class="arch-sep"></div>
+
+        <div class="arch-layer">
+          <div class="arch-node gateway">
+            <i class="ph ph-arrows-clockwise text-2xl"></i>
+            بوابة API المركزية
+            <small>Authentication + Rate Limits + Routing</small>
+          </div>
+        </div>
+
+        <div class="arch-inline"></div>
+
+        <div class="arch-layer arch-4">
+          <div class="arch-node service">
+            <i class="ph ph-ticket text-xl"></i>
+            خدمة القسائم
+            <small>Voucher Engine</small>
+          </div>
+          <div class="arch-node service">
+            <i class="ph ph-package text-xl"></i>
+            خدمة المنتجات
+            <small>Catalog + Stock</small>
+          </div>
+          <div class="arch-node service">
+            <i class="ph ph-lock-key text-xl"></i>
+            محرك Escrow
+            <small>Hold / Verify / Release</small>
+          </div>
+          <div class="arch-node service">
+            <i class="ph ph-sparkle text-xl"></i>
+            خدمة الذكاء الاصطناعي
+            <small>Gemini Copilot</small>
+          </div>
+        </div>
+
+        <div class="arch-sep"></div>
+
+        <div class="arch-layer arch-4">
+          <div class="arch-node data">
+            <i class="ph ph-database text-xl"></i>
+            قاعدة البيانات
+            <small>PostgreSQL + Redis</small>
+          </div>
+          <div class="arch-node integration">
+            <i class="ph ph-bank text-xl"></i>
+            بوابات الدفع
+            <small>الكريمي / OneCash</small>
+          </div>
+          <div class="arch-node integration">
+            <i class="ph ph-bell-ringing text-xl"></i>
+            التنبيهات
+            <small>SMS / Push / WhatsApp</small>
+          </div>
+          <div class="arch-node integration">
+            <i class="ph ph-chart-line-up text-xl"></i>
+            التحليلات
+            <small>BI & Monitoring</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 text-sm">
+        <div class="rule bg-cyan-50 border-cyan-100">
+          <h4 class="text-cyan-900">عقود API موحدة</h4>
+          <p>تقليل تعقيد التكامل بين التطبيقات عبر بوابة مركزية واحدة.</p>
+        </div>
+        <div class="rule bg-purple-50 border-purple-100">
+          <h4 class="text-purple-900">فصل الخدمات</h4>
+          <p>كل نطاق عمل مستقل (قسائم/منتجات/Escrow/AI) لمرونة أعلى في التوسع.</p>
+        </div>
+        <div class="rule bg-orange-50 border-orange-100">
+          <h4 class="text-orange-900">تكاملات محلية</h4>
+          <p>ربط مباشر مع الدفع المحلي وقنوات الإشعار لضمان جاهزية السوق.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="slide">
+  <span class="slide-num">09 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <h2 class="title">معرض الواجهات والمشاهد البصرية</h2>
+      <p class="sub mb-5">أصول مرئية مجمعة من ملفات المشروع لعرض متماسك واحترافي.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div class="img-box"><img src="img/app-home.png" alt="app home"></div>
+        <div class="img-box"><img src="img/app-purchases.png" alt="app purchases"></div>
+        <div class="img-box"><img src="img/admin-dashboard.png" alt="admin dashboard"></div>
+        <div class="img-box"><img src="img/merchant-panel.png" alt="merchant panel"></div>
+        <div class="img-box"><img src="img/payment-checkout.png" alt="payment checkout"></div>
+        <div class="img-box"><img src="img/system-architecture.png" alt="system architecture"></div>
+        <div class="img-box"><img src="assets/app-ui-showcase.svg" alt="ui showcase"></div>
+        <div class="img-box"><img src="assets/admin-dashboard-detailed.svg" alt="admin detailed"></div>
+        <div class="img-box"><img src="assets/escrow-journey-detailed.svg" alt="escrow detailed"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pages" class="slide alt">
+  <span class="slide-num">10 / 10</span>
+  <div class="wrap reveal">
+    <div class="surface p-6 md:p-8">
+      <h2 class="title">روابط صفحات المشروع</h2>
+      <p class="sub mb-5">روابط مباشرة لجميع ملفات HTML داخل المجلد.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+        <a class="page-link" href="Waffarha_Presentation_2026.html">Waffarha_Presentation_2026.html</a>
+        <a class="page-link" href="Waffarha_Print_2026.html">Waffarha_Print_2026.html</a>
+        <a class="page-link" href="Waffarha_Pitch_2026.html">Waffarha_Pitch_2026.html</a>
+        <a class="page-link" href="index2.html">index2.html</a>
+        <a class="page-link" href="wafer.html">wafer.html</a>
+        <a class="page-link" href="wafer-4.html">wafer-4.html</a>
+        <a class="page-link" href="wafer-5.html">wafer-5.html</a>
+        <a class="page-link" href="wafer-6.html">wafer-6.html</a>
+        <a class="page-link" href="wafer%20(3).html">wafer (3).html</a>
+        <a class="page-link" href="wafer%20(Copy).html">wafer (Copy).html</a>
+        <a class="page-link" href="wafer%20(customer).html">wafer (customer).html</a>
+        <a class="page-link" href="Waffarha_Yemen_Final_Blueprint.html">Waffarha_Yemen_Final_Blueprint.html</a>
+        <a class="page-link" href="Waffarha_Yemen_Final_Doc.html">Waffarha_Yemen_Final_Doc.html</a>
+        <a class="page-link" href="Waffarha_Yemen_Technical_Blueprint.html">Waffarha_Yemen_Technical_Blueprint.html</a>
+        <a class="page-link" href="Waffarha_Yemen_Technical_Blueprint_Updated.html">Waffarha_Yemen_Technical_Blueprint_Updated.html</a>
+        <a class="page-link" href="Waffarha_Presentation_Investor_2026%20(Copy).html">Waffarha_Presentation_Investor_2026 (Copy).html</a>
+        <a class="page-link" href="وثيقة مشروع وفرها اليمن - المرجع النهائي.html">وثيقة مشروع وفرها اليمن - المرجع النهائي.html</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-8 text-center text-xs text-slate-500">
+  <div class="wrap border-t border-slate-200 pt-5">
+    <div>© 2026 WAFFARHA.YE | Pitch Deck Executive Version</div>
+    <div class="mt-1">تصميم بصري موحد مع مخططات تشغيل ومعمارية مرسومة داخل الصفحة.</div>
+  </div>
+</footer>
+
+<script>
+Chart.defaults.font.family = "'Tajawal', sans-serif";
+Chart.defaults.color = "#475569";
+Chart.defaults.locale = "ar";
+
+new Chart(document.getElementById("sectorChart"), {
+  type: "bar",
+  data: {
+    labels: ["المطاعم", "الصحة والجمال", "الإلكترونيات", "الترفيه", "خدمات السيارات"],
+    datasets: [{
+      label: "مؤشر الطلب",
+      data: [42, 28, 18, 14, 11],
+      backgroundColor: ["#06b6d4", "#0891b2", "#6366f1", "#f59e0b", "#10b981"],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, max: 50, ticks: { callback: (v) => v + "%" } }
+    }
+  }
+});
+
+new Chart(document.getElementById("mixChart"), {
+  type: "doughnut",
+  data: {
+    labels: ["عمولة القسائم", "سوق المنتجات", "الإعلانات", "تقارير البيانات"],
+    datasets: [{
+      data: [38, 36, 16, 10],
+      backgroundColor: ["#2563eb", "#06b6d4", "#f59e0b", "#8b5cf6"],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: "70%",
+    plugins: {
+      legend: { position: "bottom", labels: { boxWidth: 10 } }
+    }
+  }
+});
+
+const revEls = document.querySelectorAll(".reveal");
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add("show");
+  });
+}, { threshold: 0.12 });
+revEls.forEach((el) => revObs.observe(el));
+
+window.addEventListener("scroll", () => {
+  document.getElementById("navBar").classList.toggle("scrolled", window.scrollY > 30);
+});
+</script>
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+</html>

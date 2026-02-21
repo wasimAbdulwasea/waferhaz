@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المخطط الفني التنفيذي - وفرها اليمن</title>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #f97316;
+            --product: #7c3aed; 
+            --bg-gray: #f8fafc;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-gray);
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Blueprint Card Style */
+        .blueprint-card {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .blueprint-header {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 800;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Detailed Lists */
+        .spec-list li {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .spec-list li:last-child { border-bottom: none; }
+        .spec-label { font-weight: 600; color: #475569; }
+        .spec-value { font-family: monospace; color: #64748b; background: #f1f5f9; padding: 2px 6px; rounded: 4px; font-size: 0.8rem; }
+
+        /* Flowcharts */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #fff;
+            overflow-x: auto;
+        }
+        .flow-node {
+            background: white;
+            border: 2px solid #94a3b8;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            min-width: 120px;
+            position: relative;
+            z-index: 10;
+        }
+        .flow-arrow { flex-grow: 1; height: 2px; background: #cbd5e1; position: relative; min-width: 30px; }
+        .flow-arrow::after { content: '◀'; position: absolute; left: -6px; top: -7px; color: #94a3b8; font-size: 14px; }
+
+        /* Mobile Screen Simulation */
+        .mobile-frame {
+            border: 8px solid #1e293b;
+            border-radius: 2rem;
+            overflow: hidden;
+            width: 300px;
+            margin: 0 auto;
+            background: #f8fafc;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tags */
+        .tag { padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
+        .tag-product { background: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe; }
+        .tag-service { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+
+        @media print {
+            .no-print { display: none; }
+            body { background: white; }
+            .blueprint-card { break-inside: avoid; border: 1px solid #000; }
+        }
+    </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-lg z-50 px-6 py-3 flex justify-between items-center no-print">
+        <span class="font-black text-blue-900 text-xl tracking-tighter">WAFFARHA<span class="text-orange-500">.BLUEPRINT</span></span>
+        <div class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
+            <a href="#admin" class="hover:text-blue-600">الأدمن</a>
+            <a href="#merchant" class="hover:text-blue-600">التاجر</a>
+            <a href="#customer" class="hover:text-blue-600">العميل</a>
+            <a href="#vouchers" class="hover:text-blue-600">القسائم</a>
+            <a href="#operations" class="hover:text-purple-600">العمليات (Ops)</a>
+        </div>
+        <button onclick="window.print()" class="bg-slate-800 text-white px-4 py-2 rounded text-xs font-bold hover:bg-slate-700">طباعة الوثيقة</button>
+    </nav>
+
+    <!-- Header -->
+    <header class="mt-20 mb-12 text-center border-b-2 border-slate-200 pb-8">
+        <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold mb-4">نسخة المطورين v2.0</div>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">التحليل الفني التفصيلي (SDD)</h1>
+        <p class="text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            الدليل المرجعي لبناء نظام "وفرها - اليمن"، متضمناً تفاصيل الحقول، وتدفق البيانات، وميزة 
+            <span class="font-bold text-purple-600">سوق المنتجات (Click & Collect)</span> مع نظام الضامن المالي (Escrow).
+        </p>
+    </header>
+
+    <!-- 1. ESCROW & FINANCIAL FLOW (The Foundation) -->
+    <section id="escrow" class="mb-16">
+        <div class="blueprint-card border-purple-300 shadow-lg">
+            <div class="blueprint-header bg-purple-50 text-purple-900 border-purple-200">
+                <i class="ph ph-money text-xl"></i> التدفق المالي ونظام الضامن (Financial Workflow)
+            </div>
+            <div class="p-6">
+                <!-- Visual Financial Journey -->
+                <div class="relative flex flex-col md:flex-row justify-between items-center gap-4 text-center mb-8">
+                    <!-- Steps -->
+                    <div class="z-10 w-full md:w-1/5 bg-white border-2 border-blue-200 p-3 rounded-xl">
+                        <i class="ph ph-wallet text-2xl text-blue-600"></i>
+                        <div class="font-bold text-sm">العميل</div>
+                        <div class="text-xs text-red-500 font-bold">- 50,000 ريال</div>
+                    </div>
+                    <div class="hidden md:block flex-1 h-1 bg-gray-200 relative"><i class="ph ph-caret-left-bold absolute top-[-7px] left-1/2 text-gray-400"></i></div>
+                    
+                    <div class="z-10 w-full md:w-1/5 bg-white border-2 border-gray-200 p-3 rounded-xl">
+                        <i class="ph ph-bank text-2xl text-gray-600"></i>
+                        <div class="font-bold text-sm">بوابة الدفع</div>
+                        <div class="text-[10px] text-gray-500">الكريمي / OneCash</div>
+                    </div>
+                    <div class="hidden md:block flex-1 h-1 bg-gray-200 relative"><i class="ph ph-caret-left-bold absolute top-[-7px] left-1/2 text-gray-400"></i></div>
+
+                    <!-- Escrow Core -->
+                    <div class="z-10 w-full md:w-1/5 bg-yellow-50 border-2 border-yellow-400 p-3 rounded-xl shadow-md scale-105">
+                        <div class="absolute -top-3 right-0 bg-yellow-400 text-[10px] px-2 rounded font-bold">ESCROW</div>
+                        <i class="ph ph-lock-key text-2xl text-yellow-600"></i>
+                        <div class="font-bold text-sm">محفظة الحجز</div>
+                        <div class="text-xs text-blue-600 font-bold">50,000 (معلقة)</div>
+                    </div>
+
+                    <!-- Trigger -->
+                    <div class="hidden md:block flex-1 h-1 border-t-2 border-dashed border-purple-300 relative">
+                        <div class="absolute -top-6 left-1/3 bg-white px-1 text-[10px] text-purple-600 font-bold border rounded border-purple-200">Trigger: مسح الكود</div>
+                        <i class="ph ph-caret-left-bold absolute top-[-8px] left-1/2 text-purple-400"></i>
+                    </div>
+
+                    <div class="z-10 w-full md:w-1/5 flex flex-col gap-2">
+                        <div class="bg-green-50 border border-green-200 p-2 rounded">
+                            <div class="font-bold text-xs">التاجر</div>
+                            <div class="text-xs text-green-600 font-bold">+ 45,000</div>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 p-2 rounded">
+                            <div class="font-bold text-xs">عمولة التطبيق</div>
+                            <div class="text-xs text-blue-600 font-bold">+ 5,000</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-50 p-4 rounded text-xs text-slate-600 leading-relaxed border border-slate-200">
+                    <strong>المنطق البرمجي:</strong> يتم إنشاء سجل مالي بحالة <code>PENDING_RELEASE</code>. لا يتم تحديث رصيد التاجر القابل للسحب (Available Balance) إلا بعد وصول إشارة <code>scan_success</code> من تطبيق التاجر، أو مرور فترة "الحماية التلقائية" (مثلاً 7 أيام).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- 2. Admin Panel -->
+        <section id="admin">
+            <div class="blueprint-card">
+                <div class="blueprint-header text-blue-800">
+                    <i class="ph ph-monitor text-lg"></i> أولاً: لوحة تحكم الأدمن (Admin Dashboard)
+                </div>
+                <div class="p-0">
+                    <div class="bg-gray-50 p-2 text-xs font-bold text-gray-500 border-b">الوحدة: إدارة المنتجات والمخزون</div>
+                    <ul class="spec-list">
+                        <li>
+                            <span class="spec-label">مراجعة المنتجات</span>
+                            <span class="spec-value">Pending Approval List</span>
+                        </li>
+                        <li>
+                            <span class="spec-label">تفاصيل المنتج</span>
+                            <span class="spec-value">Images, Stock, Price, SKU</span>
+                        </li>
+                        <li>
+                            <span class="spec-label">سجل التعديلات</span>
+                            <span class="spec-value">Audit Log (Who changed price?)</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="bg-gray-50 p-2 text-xs font-bold text-gray-500 border-b border-t">الوحدة: الإدارة المالية (Escrow)</div>
+                    <ul class="spec-list">
+                        <li>
+                            <span class="spec-label">الأرصدة المعلقة</span>
+                            <span class="spec-value">Total Held Funds</span>
+                        </li>
+                        <li>
+                            <span class="spec-label">فض النزاعات</span>
+                            <span class="spec-value">Manual Refund / Force Release</span>
+                        </li>
+                        <li>
+                            <span class="spec-label">طلبات السحب</span>
+                            <span class="spec-value">Withdrawal Requests Queue</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Merchant Panel -->
+        <section id="merchant">
+            <div class="blueprint-card">
+                <div class="blueprint-header text-orange-700">
+                    <i class="ph ph-storefront text-lg"></i> ثانياً: لوحة تحكم التاجر (Merchant Panel)
+                </div>
+                <div class="p-0">
+                    <div class="bg-gray-50 p-2 text-xs font-bold text-gray-500 border-b">شاشة: إضافة منتج جديد (Click & Collect)</div>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">اسم المنتج</span> <span class="spec-value">Text (100 chars)</span></li>
+                        <li><span class="spec-label">المخزون (Stock)</span> <span class="text-purple-600 font-bold text-xs bg-purple-50 px-2 rounded">Integer (حرج للحجز)</span></li>
+                        <li><span class="spec-label">السعر الأساسي</span> <span class="spec-value">Decimal</span></li>
+                        <li><span class="spec-label">سعر العرض</span> <span class="spec-value">Decimal (Discounted)</span></li>
+                        <li><span class="spec-label">فترة الاستلام</span> <span class="spec-value">Date Range</span></li>
+                        <li><span class="spec-label">AI Description</span> <span class="text-sky-600 font-bold text-xs">Button: Generate via Gemini</span></li>
+                    </ul>
+
+                    <div class="bg-gray-50 p-2 text-xs font-bold text-gray-500 border-b border-t">العمليات (Operations)</div>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">ماسح QR</span> <span class="spec-value">Scan: Voucher OR Product</span></li>
+                        <li><span class="spec-label">سجل الطلبات</span> <span class="spec-value">Filter: Pending Pickup</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 4. CUSTOMER APP & UI (AS REQUESTED) -->
+    <section id="customer" class="mb-16">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-r-4 border-green-600 pr-3">ثالثاً: تطبيق العميل (Customer App & Screens)</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Screen Spec -->
+            <div class="blueprint-card h-full">
+                <div class="blueprint-header text-green-700"><i class="ph ph-device-mobile"></i> تفاصيل الشاشات</div>
+                <div class="p-4 space-y-6">
+                    <div>
+                        <h4 class="font-bold text-sm mb-2 text-slate-700">1. الشاشة الرئيسية (Discovery)</h4>
+                        <p class="text-xs text-slate-500 mb-2">تعرض خليطاً من القسائم والمنتجات مع شريط بحث ذكي.</p>
+                        <ul class="text-xs list-disc list-inside text-gray-600">
+                            <li>شريط البحث (مدعوم بـ Gemini AI).</li>
+                            <li>تصنيفات سريعة: (طعام، إلكترونيات، ترفيه).</li>
+                            <li>بطاقات العروض: تعرض السعر القديم/الجديد ونسبة الخصم.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm mb-2 text-slate-700">2. شاشة الدفع (Checkout)</h4>
+                        <p class="text-xs text-slate-500 mb-2">توضح للعميل أن أمواله محمية.</p>
+                        <div class="bg-yellow-50 border border-yellow-200 p-2 rounded text-xs text-yellow-800">
+                            <i class="ph ph-shield-check"></i> تنبيه: المبلغ سيظل محجوزاً حتى استلامك للمنتج.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UI VISUALIZATION (My Purchases) -->
+            <div class="mobile-frame p-4">
+                <!-- App Header -->
+                <div class="flex justify-between items-center mb-4">
+                    <i class="ph ph-bell text-gray-500"></i>
+                    <h3 class="font-bold text-slate-800">مشترياتي (My Orders)</h3>
+                    <i class="ph ph-list text-gray-500"></i>
+                </div>
+
+                <!-- Tabs -->
+                <div class="bg-gray-100 p-1 rounded-lg flex mb-4">
+                    <button class="flex-1 bg-white shadow-sm rounded-md py-1 text-xs font-bold text-blue-600">نشط (Active)</button>
+                    <button class="flex-1 py-1 text-xs text-gray-500">مستخدم</button>
+                    <button class="flex-1 py-1 text-xs text-gray-500">منتهي</button>
+                </div>
+
+                <!-- Product Card -->
+                <div class="bg-white border border-purple-200 rounded-xl p-3 mb-3 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 bg-purple-600 text-white text-[9px] px-2 py-0.5 rounded-br">منتج (Pickup)</div>
+                    <div class="flex gap-3 mt-2">
+                        <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center"><i class="ph ph-laptop text-gray-400"></i></div>
+                        <div class="flex-1">
+                            <div class="text-xs font-bold text-slate-800">لابتوب HP Pavilion</div>
+                            <div class="text-[10px] text-gray-500">معرض القمة - شارع حدة</div>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-[9px] bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded border border-yellow-200">تم الدفع (ضمان)</span>
+                                <span class="text-[9px] text-purple-600 font-bold">عرض كود الاستلام ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voucher Card -->
+                <div class="bg-white border border-blue-200 rounded-xl p-3 mb-3 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-br">قسيمة خدمة</div>
+                    <div class="flex gap-3 mt-2">
+                        <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center"><i class="ph ph-pizza text-gray-400"></i></div>
+                        <div class="flex-1">
+                            <div class="text-xs font-bold text-slate-800">وجبة غداء عائلية</div>
+                            <div class="text-[10px] text-gray-500">مطعم البيت الصنعاني</div>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-[9px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded border border-green-200">ساري حتى 20 فبراير</span>
+                                <div class="flex gap-1">
+                                    <i class="ph ph-qr-code text-blue-600 bg-blue-50 p-1 rounded text-xs"></i>
+                                    <i class="ph ph-gift text-orange-500 bg-orange-50 p-1 rounded text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. REPLACEMENT SECTION: VOUCHERS & GIFTS LOGIC -->
+    <section id="vouchers" class="mb-16">
+        <div class="blueprint-card border-blue-300">
+            <div class="blueprint-header bg-blue-50 text-blue-900 border-blue-200">
+                <i class="ph ph-ticket text-xl"></i> مخطط رحلة القسائم والهدايا (Vouchers Ecosystem)
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-600 mb-6 text-center">
+                    هذا المخطط يستبدل الهيكلية التقنية العامة، ليركز على دورة حياة "المنتج الرقمي" الأساسي للتطبيق.
+                </p>
+                
+                <div class="flow-container bg-slate-50 border rounded-xl">
+                    <!-- Step 1 -->
+                    <div class="flow-node border-blue-400">
+                        <div class="text-blue-600 mb-1"><i class="ph ph-user text-2xl"></i></div>
+                        <div>العميل</div>
+                        <div class="text-[10px] text-gray-500">شراء قسيمة / إهداء</div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flow-node border-gray-400">
+                        <div class="text-gray-600 mb-1"><i class="ph ph-cpu text-2xl"></i></div>
+                        <div>النظام (Backend)</div>
+                        <div class="text-[10px] text-gray-500">توليد كود مشفر (Unique)</div>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <!-- Step 3 -->
+                    <div class="flow-node border-orange-400">
+                        <div class="text-orange-600 mb-1"><i class="ph ph-share-network text-2xl"></i></div>
+                        <div>توزيع (Distribution)</div>
+                        <div class="text-[10px] text-gray-500">SMS / WhatsApp / App</div>
+                    </div>
+
+                    <div class="flow-arrow"></div>
+
+                    <!-- Step 4 -->
+                    <div class="flow-node border-green-400">
+                        <div class="text-green-600 mb-1"><i class="ph ph-storefront text-2xl"></i></div>
+                        <div>التاجر (Redeem)</div>
+                        <div class="text-[10px] text-gray-500">مسح وإبطال الكود</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="bg-blue-50 p-3 rounded text-xs border border-blue-100">
+                        <strong>🎁 منطق الإهداء (Gifting Logic):</strong> عند اختيار "إهداء"، يتم إنشاء رابط (Deep Link) فريد يرسل للمستلم. عند الفتح، يتم نقل ملكية القسيمة من حساب المشتري إلى حساب المستلم (أو تخزينها برقم هاتفه).
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded text-xs border border-gray-200">
+                        <strong>🔐 التشفير (Encryption):</strong> جميع أكواد QR يتم تشفيرها ولا تحتوي على بيانات مقروءة (مثل السعر) لمنع التزوير. التحقق يتم فقط عبر تطبيق التاجر الرسمي.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. NEW SECTION: OPERATIONS FLOW (Click & Collect) -->
+    <section id="operations" class="mb-16">
+        <div class="blueprint-card border-purple-300">
+            <div class="blueprint-header bg-purple-50 text-purple-900 border-purple-200">
+                <i class="ph ph-gears text-xl"></i> مخطط عمليات إدارة الطلبات والمسح (Operations Flow)
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                    
+                    <!-- Phase 1: Order Placement -->
+                    <div class="bg-white border p-3 rounded-lg text-center relative">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gray-200 text-[10px] px-2 rounded">مرحلة 1</div>
+                        <div class="font-bold text-sm mt-2">استلام الطلب</div>
+                        <p class="text-[10px] text-gray-500 mt-1">يظهر في لوحة التاجر كـ "مدفوع - بانتظار التجهيز"</p>
+                        <div class="mt-2 text-green-500 text-lg">⬇</div>
+                    </div>
+
+                    <!-- Phase 2: Prep -->
+                    <div class="bg-white border p-3 rounded-lg text-center relative">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-100 text-blue-800 text-[10px] px-2 rounded">مرحلة 2</div>
+                        <div class="font-bold text-sm mt-2">تجهيز المخزون</div>
+                        <p class="text-[10px] text-gray-500 mt-1">التاجر يجهز المنتج ويضغط "جاهز للاستلام"</p>
+                        <div class="mt-2 text-green-500 text-lg">⬇</div>
+                        <div class="text-[9px] bg-blue-50 p-1 rounded">إرسال إشعار للعميل 🔔</div>
+                    </div>
+
+                    <!-- Phase 3: Handover -->
+                    <div class="bg-white border border-purple-200 p-3 rounded-lg text-center relative shadow-sm">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-100 text-purple-800 text-[10px] px-2 rounded">مرحلة 3 (الحاسمة)</div>
+                        <div class="font-bold text-sm mt-2">التسليم والمسح</div>
+                        <p class="text-[10px] text-gray-500 mt-1">العميل يصل للمتجر</p>
+                        <div class="my-2 border-t border-dashed"></div>
+                        <p class="text-xs font-bold text-purple-700">التاجر يمسح QR العميل</p>
+                    </div>
+
+                    <!-- Phase 4: Financial Release -->
+                    <div class="bg-yellow-50 border border-yellow-300 p-3 rounded-lg text-center relative">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-white text-[10px] px-2 rounded">مرحلة 4</div>
+                        <div class="font-bold text-sm mt-2">تحرير الأموال</div>
+                        <p class="text-[10px] text-gray-500 mt-1">النظام يفك حجز المبلغ (Escrow Release)</p>
+                        <div class="mt-2 text-green-600 font-bold text-xs">+ الرصيد متاح</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-slate-400 text-sm py-8 border-t">
+        <p>تم إعداد هذا المستند ليكون المرجع الفني النهائي | فبراير 2026</p>
+    </footer>
+
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+</html>

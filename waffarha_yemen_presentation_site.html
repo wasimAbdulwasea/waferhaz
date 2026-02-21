@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وفرها اليمن | العرض الفني والتقني</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Marked & Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9', // Sky 500
+                        secondary: '#0f172a', // Slate 900
+                        accent: '#f59e0b', // Amber 500
+                    },
+                    fontFamily: {
+                        sans: ['IBM Plex Sans Arabic', 'Cairo', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="./print-override.css">
+
+    <style>
+        /* Custom Print Styles */
+        @media print {
+            body {
+                font-size: 11pt;
+                color: black;
+                background: white;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-break-inside-avoid {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+
+            h1,
+            h2,
+            h3 {
+                color: black !important;
+                page-break-after: avoid;
+            }
+
+            .mermaid {
+                border: 1px solid #ccc;
+            }
+
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+            font-family: 'Cairo', sans-serif !important;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-slate-800 antialiased font-sans">
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50 border-b border-gray-200 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-bold text-xl text-primary font-arabic">وفرها اليمن 🇾🇪</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#vision" class="text-gray-600 hover:text-primary transition-colors font-medium">الرؤية</a>
+                    <a href="#architecture"
+                        class="text-gray-600 hover:text-primary transition-colors font-medium">الهيكلية</a>
+                    <a href="#flows" class="text-gray-600 hover:text-primary transition-colors font-medium">العمليات
+                        الأساسية</a>
+                    <a href="#scenarios"
+                        class="text-gray-600 hover:text-primary transition-colors font-medium">السيناريوهات</a>
+                    <a href="#roadmap" class="text-gray-600 hover:text-primary transition-colors font-medium">خارطة
+                        الطريق</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button onclick="window.print()"
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all font-arabic">
+                        🖨️ طباعة / حفظ PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div id="vision" class="pt-32 pb-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1
+                class="text-4xl tracking-tight font-black text-slate-900 sm:text-5xl md:text-6xl font-arabic mb-6 leading-tight">
+                <span class="block xl:inline">منظومة وفرها اليمن</span>
+                <span class="block text-primary xl:inline">الذكية المتكاملة</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500 sm:text-xl md:max-w-3xl leading-relaxed">
+                المنصة الرائدة للتوفير الرقمي، الإهداء، والتسوق الآمن في اليمن. نربط المستهلكين بالتجار عبر نظام هجين
+                يدمج بين الدفع الإلكتروني والاستلام الواقعي مع حماية كاملة عبر "نظام الضامن".
+            </p>
+            <div class="mt-12 flex justify-center gap-6 no-print flex-wrap">
+                <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 flex-1 min-w-[200px]">
+                    <span class="block text-3xl font-bold text-blue-600 mb-1">سوق هجين</span>
+                    <span class="text-sm text-blue-800 font-medium">Marketplace Model</span>
+                </div>
+                <div class="bg-green-50 p-5 rounded-xl border border-green-100 flex-1 min-w-[200px]">
+                    <span class="block text-3xl font-bold text-green-600 mb-1">نظام الضامن</span>
+                    <span class="text-sm text-green-800 font-medium">Escrow Protection</span>
+                </div>
+                <div class="bg-purple-50 p-5 rounded-xl border border-purple-100 flex-1 min-w-[200px]">
+                    <span class="block text-3xl font-bold text-purple-600 mb-1">ذكاء اصطناعي</span>
+                    <span class="text-sm text-purple-800 font-medium">AI-Driven Ops</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-20">
+
+        <!-- Architecture Section -->
+        <section id="architecture"
+            class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 print-break-inside-avoid">
+            <div class="border-r-4 border-primary pr-6 mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 font-arabic">هيكلية النظام (Architecture)</h2>
+                <p class="text-gray-500 mt-2 text-lg">نظرة شاملة على محرك السوق الهجين والربط بين الخدمات.</p>
+            </div>
+
+            <div class="mermaid bg-slate-50 p-8 rounded-2xl border border-dashed border-slate-200" dir="ltr">
+                graph TD
+                UserApp["تطبيق المستخدم"] -->|HTTPS/REST| APIGateway["بوابة API"]
+                MerchantApp["تطبيق التاجر"] -->|HTTPS/REST| APIGateway
+                AdminPanel["لوحة الإدارة"] -->|HTTPS/REST| APIGateway
+
+                subgraph "الخدمات الخلفية - Core Backend"
+                direction TB
+                APIGateway --> Auth["خدمة التحقق Auth"]
+                APIGateway --> DealEngine["محرك العروض والقسائم"]
+                APIGateway --> MarketEngine["محرك السوق والضامن"]
+                APIGateway --> WalletService["المحفظة والتسويات"]
+
+                DealEngine --> DB[("قواعد البيانات الرئيسية")]
+                MarketEngine --> DB
+                WalletService --> DB
+
+                DealEngine --> Cache[("Redis Cache")]
+                end
+
+                subgraph "أنظمة خارجية - External"
+                Auth --> SMS["بوابة رسائل محلية SMS"]
+                WalletService --> PaymentGateways["ون كاش / الكريمي / فلوسك"]
+                DealEngine --> AI["Gemini AI ذكاء اصطناعي"]
+                end
+
+                classDef service fill:#e0f2fe,stroke:#0284c7,stroke-width:2px;
+                classDef db fill:#f0fdf4,stroke:#16a34a,stroke-width:2px;
+                classDef ext fill:#fff7ed,stroke:#ea580c,stroke-width:2px;
+
+                class Auth,DealEngine,MarketEngine,WalletService service;
+                class DB,Cache db;
+                class SMS,PaymentGateways,AI ext;
+            </div>
+        </section>
+
+        <!-- Core Flows -->
+        <section id="flows" class="space-y-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-black text-slate-900 font-arabic">العمليات الأساسية</h2>
+                <div class="w-24 h-1.5 bg-primary mx-auto mt-6 rounded-full opacity-80"></div>
+            </div>
+
+            <!-- Flow 1: User Journey -->
+            <div
+                class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 print-break-inside-avoid transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-arabic">
+                    <span
+                        class="bg-primary text-white text-sm font-bold px-3 py-1.5 rounded-lg ml-4 shadow-sm">3.1</span>
+                    رحلة المستخدم: التسجيل والاستكشاف
+                </h3>
+                <div class="grid lg:grid-cols-3 gap-10">
+                    <div class="lg:col-span-1 text-gray-600 text-base leading-loose">
+                        <p class="mb-4">عملية تسجيل مبسطة للغاية تعتمد على رقم الهاتف فقط لضمان أعلى معدل تحويل
+                            (Conversion Rate).</p>
+                        <p>يستخدم النظام الذكاء الاصطناعي لتحليل موقع المستخدم وتفضيلاته لعرض الصفقات الأنسب له في
+                            الصفحة الرئيسية.</p>
+                    </div>
+                    <div class="lg:col-span-2 mermaid bg-slate-50 p-6 rounded-xl border border-slate-100" dir="ltr">
+                        flowchart TD
+                        Start(["فتح التطبيق"]) --> CheckLogin{"هل مسجل دخول؟"}
+                        CheckLogin -- "نعم" --> HomePage["الرئيسية"]
+                        CheckLogin -- "لا" --> PhoneInput["إدخال رقم الهاتف"]
+
+                        PhoneInput --> SendOTP["إرسال رمز OTP"]
+                        SendOTP --> VerifyOTP{"التحقق من الرمز"}
+                        VerifyOTP -- "خطأ" --> Retry["إعادة المحاولة"]
+                        VerifyOTP -- "صحيح" --> CheckProfile{"مستخدم جديد؟"}
+
+                        CheckProfile -- "نعم" --> CreateProfile["إنشاء ملف (الاسم، المدينة)"]
+                        CheckProfile -- "لا" --> LoadProfile["تحميل البيانات"]
+
+                        CreateProfile --> HomePage
+                        LoadProfile --> HomePage
+
+                        HomePage --> Browse["تصفح الأقسام"]
+                        HomePage --> Search["بحث ذكي AI"]
+
+                        Browse --> ViewDeal["تفاصيل العرض"]
+                        Search -- "تحليل التفضيلات" --> AIResult["نتائج مقترحة"]
+                        AIResult --> ViewDeal
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flow 2: Merchant Redemption -->
+            <div
+                class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 print-break-inside-avoid transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-arabic">
+                    <span
+                        class="bg-primary text-white text-sm font-bold px-3 py-1.5 rounded-lg ml-4 shadow-sm">3.3</span>
+                    آلية استرداد القسائم (أونلاين / أوفلاين)
+                </h3>
+                <div class="grid lg:grid-cols-3 gap-10">
+                    <div class="lg:col-span-1 text-gray-600 text-base leading-loose">
+                        <p class="mb-4">نظام مرن مصمم خصيصاً لبيئة الإنترنت في اليمن.</p>
+                        <p>يمكن للتاجر قبول القسائم حتى بدون إنترنت، حيث يقوم التطبيق بالتحقق من التوقيع المشفر (Crypto
+                            Signature) للقسيمة وتخزين العملية محلياً حتى عودة الاتصال.</p>
+                    </div>
+                    <div class="lg:col-span-2 mermaid bg-slate-50 p-6 rounded-xl border border-slate-100" dir="ltr">
+                        flowchart TD
+                        Merchant(["التاجر"]) --> OpenScanner["فتح الماسح الضوئي"]
+                        User(["المستخدم"]) --> ShowQR["عرض كود القسيمة"]
+
+                        OpenScanner --> ScanQR["مسح الكود"]
+
+                        ScanQR --> CheckConn{"هل يوجد إنترنت؟"}
+
+                        CheckConn -- "نعم" --> OnlineCheck["تحقق عبر السيرفر"]
+                        OnlineCheck --> ValidateServer{"صالحة وغير مستخدمة؟"}
+
+                        ValidateServer -- "صالحة" --> MarkRedeemed["اعتماد القسيمة"]
+                        ValidateServer -- "غير صالحة" --> ShowMerchError["عرض رسالة خطأ"]
+
+                        CheckConn -- "لا" --> OfflineCheck["تحقق من التوقيع محلياً"]
+                        OfflineCheck --> ValidateSig{"التوقيع سليم؟"}
+
+                        ValidateSig -- "سليم" --> StoreLocal["حفظ العملية محلياً"]
+                        StoreLocal --> MarkRedeemed
+                        ValidateSig -- "مزور" --> ShowMerchError
+
+                        MarkRedeemed --> UpdateWallet["إضافة الرصيد لمحفظة التاجر"]
+                        MarkRedeemed --> NotifyUser["إشعار المستخدم بنجاح الاستخدام"]
+
+                        StoreLocal --> AutoSync["مزامنة تلقائية عند عودة النت"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flow 3: Gifting -->
+            <div
+                class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 print-break-inside-avoid transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-arabic">
+                    <span
+                        class="bg-primary text-white text-sm font-bold px-3 py-1.5 rounded-lg ml-4 shadow-sm">3.4</span>
+                    نظام الإهداء الرقمي (Gifting Flow)
+                </h3>
+                <div class="mermaid bg-slate-50 p-8 rounded-xl border border-slate-100" dir="ltr">
+                    flowchart TD
+                    Buyer(["المرسل"]) --> SelectDeal["شراء قسيمة كهدية"]
+                    SelectDeal --> Pay["إتمام الدفع"]
+
+                    Pay --> GenerateGiftLink["توليد رابط هدية / كود خاص"]
+                    GenerateGiftLink --> Share["مشاركة عبر واتساب/SMS"]
+
+                    Recipient(["المستلم"]) --> ClickLink["فتح الرابط"]
+
+                    ClickLink --> AppInstalled{"التطبيق مثبت؟"}
+
+                    AppInstalled -- "نعم" --> OpenApp["فتح التطبيق والمطالبة"]
+                    AppInstalled -- "لا" --> WebLanding["صفحة ويب: تحميل التطبيق"]
+                    WebLanding --> InstallApp["تثبيت وتسجيل"]
+                    InstallApp --> OpenApp
+
+                    OpenApp --> ValidateLink{"الرابط صالح؟"}
+                    ValidateLink -- "نعم" --> AddToWallet["إضافة لمحفظة المستلم"]
+                    ValidateLink -- "لا" --> ShowError["خطأ: مستخدمة أو منتهية"]
+
+                    AddToWallet --> NotifyBuyer["إشعار المرسل: تم استلام هديتك"]
+                </div>
+            </div>
+
+            <!-- Flow 4: Escrow -->
+            <div
+                class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 print-break-inside-avoid transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-arabic">
+                    <span
+                        class="bg-primary text-white text-sm font-bold px-3 py-1.5 rounded-lg ml-4 shadow-sm">4.0</span>
+                    سوق المنتجات ونظام الضامن (Escrow)
+                </h3>
+                <div class="mermaid bg-slate-50 p-8 rounded-xl border border-slate-100" dir="ltr">
+                    sequenceDiagram
+                    participant U as "المستخدم"
+                    participant S as "النظام (الضامن)"
+                    participant M as "التاجر"
+
+                    U->>S: شراء منتج (دفع كامل)
+                    S->>U: خصم المبلغ -> تجميد في حساب الضمان
+                    S->>M: إشعار "طلب جديد - لا تسلم حتى التحقق"
+                    S->>U: توليد كود الاستلام (Pickup QR)
+
+                    Note over U, M: يذهب المستخدم للمتجر للاستلام والفحص
+
+                    U->>M: عرض كود الاستلام
+                    M->>S: مسح الكود (طلب تحرير المبلغ)
+                    S-->>M: عرض تفاصيل المنتج و "تأكيد التسليم؟"
+
+                    M->>S: تأكيد التسليم
+                    S->>U: إشعار "هل استلمت المنتج؟"
+                    S->>M: تحرير المبلغ لمحفظة التاجر
+                    S->>M: تحديث المخزون
+                </div>
+            </div>
+
+            <!-- Flow 5: Dispute Resolution -->
+            <div
+                class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 print-break-inside-avoid transition-all hover:shadow-md">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-arabic">
+                    <span
+                        class="bg-primary text-white text-sm font-bold px-3 py-1.5 rounded-lg ml-4 shadow-sm">4.2</span>
+                    آلية فض النزاعات
+                </h3>
+                <div class="mermaid bg-slate-50 p-8 rounded-xl border border-slate-100" dir="ltr">
+                    flowchart TD
+                    User(["المستخدم"]) --> RaiseDispute["بلاغ: لم أستلم المنتج"]
+                    RaiseDispute --> System["النظام يضع علامة على الطلب"]
+
+                    System --> FreezeFunds["تجميد أموال الضمان فوراً"]
+
+                    System --> CollectEvidence["جمع الأدلة: الموقع، الوقت، السجلات"]
+                    CollectEvidence --> CheckQR["فحص سجل مسح الكود"]
+
+                    CheckQR --> Scanned{"هل تم مسح الكود؟"}
+
+                    Scanned -- "لا" --> RefundUser["إعادة المال للمستخدم"]
+
+                    Scanned -- "نعم" --> CheckGeo["مقارنة موقع التاجر والمستخدم"]
+                    CheckGeo --> Match{"تطابق المواقع؟"}
+
+                    Match -- "نعم" --> RejectDispute["رفض البلاغ (وجود أدلة حضور)"]
+                    Match -- "لا" --> ManualReview["تحويل للمراجعة اليدوية"]
+
+                    ManualReview --> Admin(["الإدارة"])
+                    Admin --> Contact["تواصل مع الطرفين"]
+                    Admin -- "خطأ تاجر" --> RefundUser
+                    Admin -- "احتيال مستخدم" --> ReleaseToMerchant["تحرير المال للتاجر"]
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Scenarios Info -->
+        <section id="scenarios" class="bg-slate-900 text-white rounded-3xl shadow-lg p-12 print-break-inside-avoid">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-3xl font-bold mb-8 text-primary font-arabic">السيناريوهات التقنية الحرجة</h2>
+                    <ul class="space-y-8">
+                        <li class="flex items-start">
+                            <span
+                                class="bg-green-500 rounded-lg p-1.5 mt-1 ml-4 flex-shrink-0 shadow-lg shadow-green-500/20">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </span>
+                            <div>
+                                <strong class="block text-xl mb-2 font-arabic">ضغط العروض الخاطفة (Flash Sales)</strong>
+                                <span class="text-slate-300 text-base leading-relaxed">استخدام عدادات Redis الذرية
+                                    (Atomic Counters) وأقفال قاعدة البيانات (Row Locking) لمنع بيع "ما لا يملك" وضمان
+                                    عدم شراء نفس القطعة مرتين في نفس اللحظة.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span
+                                class="bg-green-500 rounded-lg p-1.5 mt-1 ml-4 flex-shrink-0 shadow-lg shadow-green-500/20">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </span>
+                            <div>
+                                <strong class="block text-xl mb-2 font-arabic">منع الاحتيال في وضع الأوفلاين</strong>
+                                <span class="text-slate-300 text-base leading-relaxed">القسائم موقعة رقمياً بمفتاح خاص.
+                                    عند المزامنة، يتحقق السيرفر من سجلات الاسترداد لمنع "الإنفاق المزدوج" (Double
+                                    Spending) للقسيمة الواحدة.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span
+                                class="bg-green-500 rounded-lg p-1.5 mt-1 ml-4 flex-shrink-0 shadow-lg shadow-green-500/20">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </span>
+                            <div>
+                                <strong class="block text-xl mb-2 font-arabic">الأدلة الجنائية الرقمية</strong>
+                                <span class="text-slate-300 text-base leading-relaxed">تسجيل الموقع الجغرافي
+                                    (Geo-tagging) والوقت ونوع الجهاز عند كل عملية مسح، لاستخدامه كدليل قاطع في حال نشوب
+                                    نزاع بين التاجر والعميل.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Mini Diagram for Scenarios -->
+                <div class="bg-white rounded-2xl p-6 text-slate-800 mermaid border border-slate-700/50 shadow-2xl"
+                    dir="ltr">
+                    sequenceDiagram
+                    participant User as المستخدم
+                    participant Redis as كاش Redis
+                    participant DB as قاعدة البيانات
+                    User->>Redis: شراء (إنقاص ذري Atomic DECR)
+                    Redis-->>User: نجح (1) / فشل (0)
+                    alt نجاح
+                    User->>DB: قفل السجل وإنشاء الطلب
+                    else فشل
+                    User->>User: رسالة "نفذت الكمية"
+                    end
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap" class="print-break-inside-avoid">
+            <h2 class="text-4xl font-bold text-slate-900 mb-12 text-center font-arabic">خارطة الطريق وزمن التنفيذ</h2>
+            <div class="relative border-r-4 border-gray-200 mr-4 md:mr-10 space-y-12">
+
+                <div class="relative pr-8 md:pr-12">
+                    <span
+                        class="absolute -right-3.5 top-1 h-6 w-6 rounded-full bg-primary border-4 border-white shadow-sm"></span>
+                    <h3 class="text-xl font-bold text-slate-900 font-arabic">المرحلة 1-2: التأسيس والدراسة</h3>
+                    <p class="text-gray-500 mt-2">التحليل الفني والوظيفي، دراسة المستخدمين، نمذجة الإيرادات، وتصميم
+                        تجربة المستخدم (UX/UI).</p>
+                </div>
+
+                <div class="relative pr-8 md:pr-12">
+                    <span
+                        class="absolute -right-3.5 top-1 h-6 w-6 rounded-full bg-primary border-4 border-white shadow-sm"></span>
+                    <h3 class="text-xl font-bold text-slate-900 font-arabic">المرحلة 3-6: التطوير الأساسي</h3>
+                    <p class="text-gray-500 mt-2">بناء البنية التحتية، قواعد البيانات، تطبيقات الموبايل (iOS/Android)،
+                        لوحات التحكم، والربط مع بوابات الدفع.</p>
+                </div>
+
+                <div class="relative pr-8 md:pr-12">
+                    <span
+                        class="absolute -right-3.5 top-1 h-6 w-6 rounded-full bg-primary border-4 border-white shadow-sm"></span>
+                    <h3 class="text-xl font-bold text-slate-900 font-arabic">المرحلة 7: ضبط الجودة والأمان</h3>
+                    <p class="text-gray-500 mt-2">اختبارات الاختراق الأمنية، اختبار تحمل الضغط (Load Testing) للعروض
+                        الخاطفة، وضمان خلو النظام من الثغرات.</p>
+                </div>
+
+                <div class="relative pr-8 md:pr-12">
+                    <span
+                        class="absolute -right-3.5 top-1 h-6 w-6 rounded-full bg-green-500 border-4 border-white shadow-sm"></span>
+                    <h3 class="text-xl font-bold text-slate-900 font-arabic">المرحلة 8-10: الإطلاق والدعم</h3>
+                    <p class="text-gray-500 mt-2">نشر التطبيقات، تسليم السورس كود، تدريب الطاقم الإداري، وتقديم الدعم
+                        الفني والصيانة لمدة 12 شهر.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white py-16 mt-24 no-print text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6 font-arabic text-primary">وفرها اليمن 🇾🇪</h2>
+            <p class="text-slate-400 max-w-lg mx-auto leading-relaxed">نصنع مستقبل التجارة الرقمية في اليمن عبر تقنيات
+                آمنة، ذكية، وموثوقة.</p>
+            <div class="mt-12 pt-8 border-t border-slate-800 text-sm text-slate-600">
+                &copy; 2026 جميع الحقوق محفوظة لمشروع وفرها اليمن.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'neutral',
+                securityLevel: 'loose',
+                flowchart: { curve: 'basis', htmlLabels: true },
+                fontFamily: 'Cairo'
+            });
+        });
+    </script>
+
+    <!-- Save as Image Utility -->
+    <script src="save-chart.js"></script>
+</body>
+
+</html>

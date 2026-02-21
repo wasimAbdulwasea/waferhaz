@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وفرها اليمن | العرض الفني الاحترافي</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Marked & Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+    <!-- Google Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981', // Emerald
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                        },
+                        secondary: {
+                            800: '#1e293b',
+                            900: '#0f172a', // Slate
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        heading: ['Tajawal', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="./print-override.css">
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        /* Decorative Grid Background */
+        .bg-grid {
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, transparent, 10%, white, 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.1) 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Mermaid Styles */
+        .mermaid {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: center;
+            direction: ltr;
+            /* Important for Mermaid layout engine */
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Glass Header */
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .section-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .bg-grid {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .section-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-secondary-900 antialiased selection:bg-primary-100 selection:text-primary-900">
+
+    <div class="bg-grid bg-grid-pattern"></div>
+
+    <!-- Navigation / Header -->
+    <header class="text-white shadow-xl sticky top-0 z-50 no-print border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-primary-500/30">
+                    W</div>
+                <div>
+                    <h1 class="font-bold text-2xl tracking-tight leading-none">وفرها اليمن</h1>
+                    <p class="text-xs text-slate-400 font-mono mt-1 opacity-80">Architecture Document v2.0</p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex gap-8 text-sm font-semibold text-slate-300">
+                <a href="#vision"
+                    class="hover:text-primary-400 transition-colors py-2 border-b-2 border-transparent hover:border-primary-400">الرؤية</a>
+                <a href="#architecture"
+                    class="hover:text-primary-400 transition-colors py-2 border-b-2 border-transparent hover:border-primary-400">البنية
+                    التحتية</a>
+                <a href="#flows"
+                    class="hover:text-primary-400 transition-colors py-2 border-b-2 border-transparent hover:border-primary-400">العمليات</a>
+                <a href="#roadmap"
+                    class="hover:text-primary-400 transition-colors py-2 border-b-2 border-transparent hover:border-primary-400">خارطة
+                    الطريق</a>
+            </nav>
+
+            <div>
+                <button onclick="window.print()"
+                    class="group bg-slate-800 hover:bg-primary-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 border border-slate-700 hover:border-primary-500 flex items-center gap-2">
+                    <i class="fas fa-print group-hover:scale-110 transition-transform"></i>
+                    <span>طباعة / PDF</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-10 space-y-20">
+
+        <!-- 1. Executive Summary -->
+        <section id="vision" class="relative">
+            <!-- Decorative header blob -->
+            <div class="absolute -top-10 -right-10 w-64 h-64 bg-primary-100 rounded-full blur-3xl opacity-50 -z-10">
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-10 items-start">
+                <div class="md:col-span-8">
+                    <div class="border-r-4 border-primary-500 pr-6 mb-8">
+                        <h2 class="text-4xl font-extrabold text-secondary-900 mb-2">الرؤية الاستراتيجية</h2>
+                        <p class="text-xl text-slate-500 font-light">منصة التوفير الرقمية الأولى في اليمن</p>
+                    </div>
+
+                    <p class="text-lg text-slate-700 mb-8 leading-loose text-justify pl-4">
+                        تم تصميم <span class="font-bold text-primary-600">"وفرها اليمن"</span> لسد الفجوة بين المستهلكين
+                        الباحثين عن القيمة والتجار الهادفين للنمو. نقدم نظاماً بيئياً آمناً يعتمد على التكنولوجيا
+                        المالية الحديثة (Fintech) والذكاء الاصطناعي (AI) لضمان تجربة سلسة وموثوقة.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <!-- User Card -->
+                        <div class="section-card p-6 border-t-4 border-t-primary-500">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div
+                                    class="w-12 h-12 bg-primary-50 rounded-full flex items-center justify-center text-primary-600">
+                                    <i class="fas fa-users fa-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-lg">تجربة المستخدم</h3>
+                            </div>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary-500 text-xs"></i> عروض حصرية وتخفيضات فورية
+                                </li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary-500 text-xs"></i> إهداء القسائم عبر واتساب</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fas fa-check text-primary-500 text-xs"></i> سوق "احجز واستلم" الآمن</li>
+                            </ul>
+                        </div>
+
+                        <!-- Merchant Card -->
+                        <div class="section-card p-6 border-t-4 border-t-blue-500">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div
+                                    class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-store fa-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-lg">تمكين التجار</h3>
+                            </div>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500 text-xs"></i>
+                                    إيرادات مضمونة عبر الضمان (Escrow)</li>
+                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500 text-xs"></i>
+                                    تسويق ذكي بالذكاء الاصطناعي</li>
+                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500 text-xs"></i>
+                                    استرداد آمن بدون إنترنت</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats/Highlights Sidebar -->
+                <div class="md:col-span-4 space-y-4">
+                    <div
+                        class="bg-secondary-900 text-white p-6 rounded-2xl shadow-xl transform hover:-translate-y-1 transition-transform">
+                        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            المميزات التنافسية
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3 p-3 bg-white/10 rounded-lg">
+                                <i class="fas fa-wifi mt-1 text-primary-400"></i>
+                                <div>
+                                    <span class="block font-bold text-sm">عمل بلا إنترنت</span>
+                                    <span class="text-xs text-slate-300">مزامنة البيانات لاحقاً</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/10 rounded-lg">
+                                <i class="fas fa-wallet mt-1 text-primary-400"></i>
+                                <div>
+                                    <span class="block font-bold text-sm">محافظ محلية</span>
+                                    <span class="text-xs text-slate-300">ون كاش، الكريمي، فلوسك</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/10 rounded-lg">
+                                <i class="fas fa-shield-alt mt-1 text-primary-400"></i>
+                                <div>
+                                    <span class="block font-bold text-sm">نظام الضمان</span>
+                                    <span class="text-xs text-slate-300">حماية أموال الطرفين</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. System Architecture -->
+        <section id="architecture" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="h-10 w-2 bg-primary-500 rounded-full"></div>
+                <div>
+                    <h2 class="text-3xl font-bold text-secondary-900">2. البنية التقنية للنظام</h2>
+                    <p class="text-slate-500 text-sm mt-1">تصميم هجين (Microservices) لضمان الأداء والتوسع</p>
+                </div>
+            </div>
+
+            <div class="section-card overflow-hidden">
+                <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex justify-between items-center">
+                    <span class="text-xs font-mono text-slate-500 font-bold uppercase">System_Diagram_v1.0</span>
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                </div>
+                <div class="mermaid">
+                    graph TD
+                    %% Define styles
+                    classDef user fill:#f1f5f9,stroke:#334155,stroke-width:2px,color:#1e293b;
+                    classDef gateway fill:#f0fdf4,stroke:#10b981,stroke-width:2px,color:#064e3b;
+                    classDef core fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+                    classDef db fill:#fff7ed,stroke:#f97316,stroke-width:2px,stroke-dasharray: 5 5,color:#7c2d12;
+                    classDef ext fill:#faf5ff,stroke:#a855f7,stroke-width:2px,color:#581c87;
+
+                    UserApp["📱 تطبيق المستخدم"]:::user -->|HTTPS/REST| APIGateway
+                    MerchantApp["🏪 تطبيق التاجر"]:::user -->|HTTPS/REST| APIGateway
+                    AdminPanel["💻 لوحة الإدارة"]:::user -->|HTTPS/REST| APIGateway
+
+                    subgraph "الخدمات الخلفية (Backend)"
+                    APIGateway["🌐 بوابة API"]:::gateway --> Auth["🔒 خدمة المصادقة"]:::core
+                    APIGateway --> DealEngine["🎫 محرك العروض"]:::core
+                    APIGateway --> MarketEngine["⚖️ محرك الضمان"]:::core
+                    APIGateway --> WalletService["💰 خدمة المحفظة"]:::core
+
+                    DealEngine --> DB[("(PostgreSQL) قاعدة البيانات")]:::db
+                    MarketEngine --> DB
+                    WalletService --> DB
+
+                    DealEngine --> Cache[("(Redis) الذاكرة المؤقتة")]:::db
+                    end
+
+                    subgraph "التكاملات الخارجية"
+                    Auth --> SMS["📩 بوابة SMS"]:::ext
+                    WalletService --> PaymentGateways["💳 ون كاش / الكريمي"]:::ext
+                    DealEngine --> AI["🤖 Gemini AI"]:::ext
+                    end
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Core Modules -->
+        <section id="flows" class="scroll-mt-24 space-y-16">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-primary-600 font-bold text-sm tracking-wider uppercase">سير العمليات</span>
+                <h2 class="text-3xl font-extrabold text-secondary-900 mt-2">رحلة المستخدم والتاجر</h2>
+                <div class="w-24 h-1.5 bg-primary-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10">
+                <!-- 3.1 User Journey -->
+                <div class="section-card p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-primary-500 group-hover:w-3 transition-all"></div>
+                    <h3 class="text-xl font-bold flex items-center gap-3 mb-6">
+                        <span
+                            class="w-8 h-8 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center text-sm font-bold">1</span>
+                        التسجيل والاكتشاف
+                    </h3>
+                    <div class="mermaid">
+                        flowchart TD
+                        Start([🚀 فتح التطبيق]) --> CheckLogin{مسجل؟}
+                        CheckLogin -- "نعم" --> HomePage["🏠 الرئيسية"]
+                        CheckLogin -- "لا" --> PhoneInput["📱 إدخال الهاتف"]
+
+                        PhoneInput --> SendOTP["📩 إرسال الرمز"]
+                        SendOTP --> VerifyOTP{الرمز صحيح؟}
+                        VerifyOTP -- "لا" --> Retry["🔁 محاولة مجدداً"]
+                        VerifyOTP -- "نعم" --> CheckProfile{جديد؟}
+
+                        CheckProfile -- "نعم" --> CreateProfile["📝 إنشاء ملف"]
+                        CheckProfile -- "لا" --> LoadProfile["📂 تحميل بيانات"]
+
+                        CreateProfile --> HomePage
+                        LoadProfile --> HomePage
+
+                        HomePage --> Browse["🔍 تصفح ذكي"]
+                    </div>
+                </div>
+
+                <!-- 3.2 Voucher Lifecycle -->
+                <div class="section-card p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-blue-500 group-hover:w-3 transition-all"></div>
+                    <h3 class="text-xl font-bold flex items-center gap-3 mb-6">
+                        <span
+                            class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold">2</span>
+                        شراء القسيمة (Secure)
+                    </h3>
+                    <div class="mermaid">
+                        flowchart TD
+                        User(["👤 المستخدم"]) --> SelectDeal["🏷️ اختيار العرض"]
+                        SelectDeal --> PayRequest["💳 الدفع (محفظة)"]
+
+                        PayRequest --> VerifyPayment{نجاح؟}
+                        VerifyPayment -- "لا" --> ShowError["❌ خطأ"]
+                        VerifyPayment -- "نعم" --> GenerateVoucher["⚙️ توليد القسيمة"]
+
+                        subgraph "التشفير"
+                        direction TB
+                        GenerateVoucher --> Sign["🔐 توقيع رقمي"]
+                        Sign --> StoreDB["💾 حفظ آمن"]
+                        end
+
+                        StoreDB --> SendNotif["🔔 إشعار"]
+                        SendNotif --> UserWallet["📂 محفظتي"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3.3 Merchant Redemption (FIXED & ENHANCED) -->
+            <div class="section-card p-8 border-t-8 border-t-purple-500 shadow-lg">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                    <div>
+                        <h3 class="text-2xl font-bold text-secondary-900 flex items-center gap-3">
+                            <i class="fas fa-qrcode text-purple-500"></i>
+                            3.3 استرداد التاجر (أونلاين / أوفلاين)
+                        </h3>
+                        <p class="text-slate-500 mt-2 text-sm">نظام ذكي يعالج انقطاع الإنترنت باستخدام التواقيع الرقمية
+                            والمزامنة اللاحقة.</p>
+                    </div>
+                    <span
+                        class="hidden md:inline-block px-4 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold border border-purple-200">Critical
+                        Core Flow</span>
+                </div>
+
+                <div class="mermaid">
+                    flowchart TD
+                    %% Define styles
+                    classDef success fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b;
+                    classDef error fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#991b1b;
+                    classDef decision fill:#fff7ed,stroke:#d97706,stroke-width:2px,stroke-dasharray: 5 5,color:#92400e;
+                    classDef process fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e40af;
+
+                    Merchant(["👤 التاجر"]) --> OpenScanner["📱 فتح الماسح الضوئي"]
+                    User(["👤 المستخدم"]) --> ShowQR["🎫 عرض كود القسيمة QR"]
+
+                    OpenScanner --> ScanQR["📸 مسح الكود"]
+                    ScanQR --> CheckConn{"🌐 هل يوجد إنترنت؟"}
+
+                    %% Online Path
+                    CheckConn -- "نعم" --> OnlineCheck["☁️ تحقق عبر الخادم"]
+                    OnlineCheck --> ValidateServer{"✅ صالح ونشط؟"}
+
+                    ValidateServer -- "نعم" --> MarkRedeemed["🎉 تم الاسترداد بنجاح"]
+                    ValidateServer -- "لا" --> ShowMerchError["⛔ عرض رسالة خطأ"]
+
+                    %% Offline Path
+                    CheckConn -- "لا" --> OfflineCheck["🔐 تحقق من التوقيع محلياً"]
+                    OfflineCheck --> ValidateSig{"✅ التوقيع سليم؟"}
+
+                    ValidateSig -- "نعم" --> StoreLocal["💾 حفظ المعاملة محلياً"]
+                    StoreLocal --> MarkRedeemed
+                    ValidateSig -- "لا" --> ShowMerchError
+
+                    %% Post-Redemption
+                    MarkRedeemed --> UpdateWallet["💰 إيداع في المحفظة (معلق)"]
+                    MarkRedeemed --> NotifyUser["🔔 إشعار المستخدم"]
+
+                    StoreLocal -.->|🔄 مزامنة لاحقاً| AutoSync["☁️ مزامنة في الخلفية"]
+
+                    %% Apply styles
+                    class MarkRedeemed,NotifyUser,UpdateWallet success;
+                    class ShowMerchError error;
+                    class CheckConn,ValidateServer,ValidateSig decision;
+                    class Merchant,User,OpenScanner,ScanQR,OnlineCheck,OfflineCheck,StoreLocal,AutoSync process;
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Escrow Sequence -->
+        <section class="section-card p-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i class="fas fa-handshake text-primary-400"></i>
+                4. دورة الضمان (Escrow)
+            </h2>
+            <p class="text-slate-300 mb-6 text-sm">آلية "Click & Collect" لضمان حق المشتري في الفحص قبل استلام التاجر
+                للأموال.</p>
+            <div class="mermaid">
+                sequenceDiagram
+                participant U as 👤 المستخدم
+                participant S as ⚖️ نظام الضمان
+                participant M as 🏪 التاجر
+
+                Note over U,M: مرحلة الشراء
+                U->>S: 1. شراء المنتج (دفع كامل)
+                S->>S: خصم المبلغ ➡️ تجميد في الضمان
+                S-->>M: إشعار: طلب جديد (معلق)
+                S-->>U: إصدار كود الاستلام (QR)
+
+                Note over U,M: مرحلة الاستلام في المتجر
+
+                U->>M: 2. زيارة المتجر وعرض الكود
+                M->>S: مسح الكود (طلب الإفراج)
+                S-->>M: عرض تفاصيل المنتج وتأكيد التسليم
+                M->>S: 3. تأكيد تسليم المنتج
+
+                par التحقق النهائي
+                S->>U: إشعار: "هل استلمت المنتج؟"
+                U->>S: تأكيد الاستلام
+                and التسوية المالية
+                S->>M: ✅ الإفراج عن الأموال
+                S->>M: 📉 تحديث المخزون
+                end
+            </div>
+        </section>
+
+        <!-- 5. Roadmap -->
+        <section id="roadmap" class="scroll-mt-24">
+            <h2 class="text-3xl font-bold text-secondary-900 mb-10 text-center">خارطة طريق المشروع</h2>
+
+            <div class="relative">
+                <!-- Vertical Line -->
+                <div class="absolute right-1/2 transform translate-x-1/2 h-full w-1 bg-slate-200 hidden md:block"></div>
+
+                <div class="space-y-12">
+                    <!-- Phase 1 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between relative group">
+                        <div class="md:w-5/12 order-2 md:order-1 text-left pl-8"></div>
+                        <div
+                            class="absolute right-1/2 transform translate-x-1/2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block group-hover:scale-125 transition-transform">
+                        </div>
+                        <div class="md:w-5/12 order-1 md:order-2">
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-md border-r-4 border-emerald-500 hover:shadow-xl transition-shadow text-right">
+                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">المرحلة
+                                    الأولى</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-1">التأسيس والتحليل</h3>
+                                <p class="text-slate-500 mt-2 text-sm">دراسة السوق، تحليل المتطلبات، وتصميم واجهات
+                                    المستخدم (UI/UX).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between relative group">
+                        <div class="md:w-5/12 order-1">
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500 hover:shadow-xl transition-shadow text-left md:text-right">
+                                <!-- Adjusted alignment for RTL flow logic -->
+                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">المرحلة
+                                    الثانية</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-1">التطوير الأساسي (MVP)</h3>
+                                <p class="text-slate-500 mt-2 text-sm">بناء واجهات API، تطبيقات الهاتف، ولوحة التحكم،
+                                    وربط بوابات الدفع.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute right-1/2 transform translate-x-1/2 w-8 h-8 bg-blue-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block group-hover:scale-125 transition-transform">
+                        </div>
+                        <div class="md:w-5/12 order-2"></div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between relative group">
+                        <div class="md:w-5/12 order-2 md:order-1"></div>
+                        <div
+                            class="absolute right-1/2 transform translate-x-1/2 w-8 h-8 bg-purple-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block group-hover:scale-125 transition-transform">
+                        </div>
+                        <div class="md:w-5/12 order-1 md:order-2">
+                            <div
+                                class="bg-white p-6 rounded-xl shadow-md border-r-4 border-purple-500 hover:shadow-xl transition-shadow text-right">
+                                <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">المرحلة
+                                    الثالثة</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-1">اختبارات الجودة والإطلاق</h3>
+                                <p class="text-slate-500 mt-2 text-sm">فحص الثغرات الأمنية، اختبارات الضغط (Flash
+                                    Sales)، والإطلاق التجريبي.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-secondary-900 text-slate-400 py-16 mt-20 no-print border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner">
+                <span class="text-2xl font-bold text-white">W</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-4 font-heading text-white">وفرها اليمن</h2>
+            <p class="max-w-md mx-auto mb-8 text-slate-500">منصة تقنية متكاملة تهدف لرفع الكفاءة الاقتصادية للمجتمع
+                اليمني.</p>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="hover:text-primary-500 transition"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="hover:text-primary-500 transition"><i class="fab fa-linkedin fa-lg"></i></a>
+                <a href="#" class="hover:text-primary-500 transition"><i class="fas fa-globe fa-lg"></i></a>
+            </div>
+            <p class="text-sm text-slate-600 border-t border-slate-800 pt-8">&copy; 2026 Waffarha Yemen. جميع الحقوق
+                محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'base',
+                securityLevel: 'loose',
+                flowchart: {
+                    curve: 'basis',
+                    padding: 20
+                },
+                themeVariables: {
+                    fontFamily: 'Cairo',
+                    fontSize: '14px',
+                    lineColor: '#cbd5e1',
+                    textColor: '#334155',
+                    mainBkg: '#ffffff',
+                    nodeBorder: '#e2e8f0'
+                }
+            });
+        });
+    </script>
+
+    <!-- Save as Image Utility -->
+    <script src="save-chart.js"></script>
+</body>
+
+</html>

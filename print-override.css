@@ -1,0 +1,311 @@
+/* ══════════════════════════════════════════════════════════════
+   Print Override — Optimized for A4 PDF output
+   Shared across all HTML files in this project.
+   ══════════════════════════════════════════════════════════════ */
+
+@page {
+  size: A4 portrait;
+  margin: 12mm 10mm 12mm 10mm;
+}
+
+@media print {
+  /* ── Reset & Base ── */
+  html,
+  body {
+    width: 210mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    color: #000 !important;
+  }
+
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ── Force color printing ── */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* ── Ensure hidden/animated elements are visible ── */
+  .reveal,
+  .reveal.show,
+  .reveal.in-view,
+  [class*="reveal"],
+  [class*="fade"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* ── Remove fixed/sticky positioning ── */
+  .fixed,
+  [class^="fixed"],
+  [class*=" fixed"],
+  .sticky,
+  [class^="sticky"],
+  [class*=" sticky"],
+  [style*="position: fixed"],
+  [style*="position:fixed"],
+  [style*="position: sticky"],
+  [style*="position:sticky"],
+  header,
+  nav,
+  .nav,
+  .deck-nav,
+  .dot-nav,
+  .page-footer {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset: auto !important;
+    transform: none !important;
+  }
+
+  /* ── Hide non-print elements ── */
+  .no-print,
+  .print-helper-btn,
+  .save-chart-btn,
+  .save-chart-wrapper > .save-chart-btn,
+  button[onclick*="window.print"],
+  .btn-print,
+  #printDeck,
+  .dot-nav,
+  .floating,
+  [class*="floating"],
+  [class*="scroll-top"] {
+    display: none !important;
+  }
+
+  /* ── Remove screen-only height constraints ── */
+  [class*="min-h-screen"],
+  [class*="h-screen"],
+  [class*="max-h-screen"],
+  [style*="100vh"] {
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .pitch,
+  .slide,
+  .deck-section {
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  /* ── Fix overflow so everything shows ── */
+  [class*="overflow-hidden"],
+  [class*="overflow-x-hidden"],
+  [class*="overflow-y-hidden"],
+  [class*="overflow-x-auto"],
+  .mermaid {
+    overflow: visible !important;
+  }
+
+  /* ── Layout adjustments for A4 ── */
+  main,
+  .max-w-7xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl,
+  .max-w-2xl {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* ── Reduce excessive spacing for print ── */
+  main {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .space-y-16 > * + *,
+  .space-y-20 > * + *,
+  .space-y-24 > * + * {
+    margin-top: 20px !important;
+  }
+
+  .space-y-12 > * + * {
+    margin-top: 16px !important;
+  }
+
+  section {
+    margin-bottom: 16px !important;
+    padding-bottom: 12px !important;
+  }
+
+  /* ── Page break controls ── */
+  main,
+  section,
+  article,
+  header,
+  footer,
+  .page,
+  .slide,
+  .deck-section,
+  .pitch {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    page-break-after: auto !important;
+    overflow: visible !important;
+  }
+
+  /* ── Keep cards and panels together ── */
+  .pro-card,
+  .glass,
+  .glass-card,
+  .glass-panel,
+  .panel,
+  .panel-dark,
+  .tech-card,
+  .blueprint-card,
+  .surface,
+  .surface-dark,
+  .metric,
+  .rule,
+  .card,
+  .section-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Keep headings with their content ── */
+  h1,
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+  }
+
+  /* ── Mermaid diagrams — fit within A4 width ── */
+  .mermaid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+    max-width: 100% !important;
+  }
+
+  .mermaid svg {
+    max-width: 100% !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  /* ── Images, SVGs, Canvases, Tables ── */
+  img,
+  svg,
+  canvas,
+  table {
+    max-width: 100% !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  canvas {
+    height: auto !important;
+  }
+
+  /* ── Links — don't show URL ── */
+  a[href]::after {
+    content: "" !important;
+  }
+
+  /* ── Footer adjustments ── */
+  footer {
+    margin-top: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Grid layouts — keep readable ── */
+  .grid {
+    gap: 12px !important;
+  }
+
+  /* ── Background grid decoration — hide ── */
+  .bg-grid,
+  .bg-grid-pattern {
+    display: none !important;
+  }
+
+  /* ── Reduce shadows for clean print ── */
+  .shadow-sm,
+  .shadow-md,
+  .shadow-lg,
+  .shadow-xl,
+  .shadow-2xl {
+    box-shadow: none !important;
+  }
+
+  /* ── Backdrop blur — remove (not printable) ── */
+  [class*="backdrop-blur"],
+  [style*="backdrop-filter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* ── Glassmorphism panels — solid background for print ── */
+  .glass-panel {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* ── Dark sections — keep with lighter text for readability ── */
+  .bg-slate-900,
+  .bg-secondary-900,
+  [class*="bg-slate-900"],
+  [class*="bg-secondary-900"] {
+    background-color: #1e293b !important;
+  }
+
+  /* ── Mobile screen mockup — fit A4 ── */
+  .mobile-screen {
+    height: auto !important;
+    max-height: 400px !important;
+    break-inside: avoid !important;
+  }
+
+  /* ── Rounded corners on dark sections — keep for visual identity ── */
+  .rounded-3xl {
+    border-radius: 12px !important;
+  }
+
+  /* ── pt-28/pt-32 (large top padding for nav clearance) — remove ── */
+  [class*="pt-28"],
+  [class*="pt-32"] {
+    padding-top: 16px !important;
+  }
+
+  /* ── Gradient text — make solid for print ── */
+  .txt-gradient {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: #1e3a8a !important;
+    color: #1e3a8a !important;
+  }
+}

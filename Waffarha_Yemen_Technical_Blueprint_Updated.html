@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وثيقة التحليل الفني التفصيلي - وفرها اليمن</title>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #f97316;
+            --product: #7c3aed; /* For Product/Escrow Features */
+            --bg-gray: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-gray);
+            color: #1e293b;
+        }
+
+        /* Technical Card Style */
+        .tech-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .tech-header {
+            background: #f8fafc;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .field-list li {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .field-list li:last-child { border-bottom: none; }
+
+        .tag-product { background-color: #f3e8ff; color: #6b21a8; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; border: 1px solid #d8b4fe; }
+        .tag-service { background-color: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; border: 1px solid #93c5fd; }
+        
+        /* Flowchart Nodes */
+        .process-node {
+            background: white;
+            border: 2px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            position: relative;
+        }
+        .process-node.escrow { border-color: #f59e0b; background: #fffbeb; }
+        
+        .arrow-down::after { content: '↓'; display: block; text-align: center; font-weight: bold; color: #94a3b8; margin: 5px 0; }
+
+        /* Money Flow Animation */
+        @keyframes flowLine {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .money-flow-line {
+            stroke-dasharray: 10;
+            animation: flowLine 2s linear infinite;
+        }
+
+        @media print {
+            .no-print { display: none; }
+            body { background: white; }
+            .tech-card { break-inside: avoid; }
+        }
+    </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+<body class="antialiased p-4 md:p-8">
+
+    <!-- Navigation (No Print) -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 px-8 py-3 flex justify-between items-center no-print">
+        <span class="font-black text-blue-900 text-lg">WAFFARHA<span class="text-orange-500">.TECH.DOC</span></span>
+        <div class="flex gap-4 text-sm font-bold text-slate-600">
+            <a href="#admin" class="hover:text-blue-600">لوحة الإدارة</a>
+            <a href="#merchant" class="hover:text-blue-600">لوحة التاجر</a>
+            <a href="#customer" class="hover:text-blue-600">تطبيق العميل</a>
+            <a href="#escrow" class="hover:text-purple-600">نظام الضامن (Escrow)</a>
+        </div>
+        <button onclick="window.print()" class="bg-slate-800 text-white px-4 py-2 rounded text-xs">طباعة PDF</button>
+    </nav>
+
+    <!-- Header -->
+    <header class="mt-16 mb-12 text-center border-b-2 border-slate-200 pb-8">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">وثيقة التحليل الفني التفصيلي (SDD)</h1>
+        <p class="text-slate-600 max-w-3xl mx-auto">
+            تحليل دقيق للعمليات الوظيفية (Functional Processes) وقواعد البيانات والواجهات، متضمناً ميزات: 
+            <span class="font-bold text-purple-600">سوق المنتجات (Click & Collect)</span> و <span class="font-bold text-yellow-600">نظام حجز الأموال (Escrow)</span>.
+        </p>
+    </header>
+
+    <!-- 1. ESCROW SYSTEM LOGIC (The Core New Feature) -->
+    <section id="escrow" class="mb-16">
+        <div class="bg-purple-900 text-white rounded-2xl p-8 shadow-xl">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <i class="ph ph-shield-check text-yellow-400"></i>
+                خوارزمية نظام الضامن المالي (Escrow Logic)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
+                <div>
+                    <p class="text-purple-200 mb-4 text-sm leading-relaxed">
+                        هذه الآلية البرمجية تحكم حركة الأموال عند شراء منتج ملموس (لابتوب/جوال). الهدف هو ضمان حق الطرفين.
+                    </p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-2"><i class="ph ph-number-circle-one text-yellow-400"></i> العميل يدفع، المبلغ يذهب إلى (Holding Wallet).</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-number-circle-two text-yellow-400"></i> التاجر يرى المبلغ كـ (Pending Balance).</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-number-circle-three text-yellow-400"></i> عند مسح كود الاستلام (Pickup QR)، يتحول المبلغ فوراً إلى (Available Balance).</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-warning text-red-400"></i> إذا لم يتم الاستلام خلال 48 ساعة (أو حسب الإعداد)، يتاح خيار "نزاع" أو "استرجاع".</li>
+                    </ul>
+                </div>
+                <!-- Visual Logic Flow -->
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+                    <h3 class="text-center text-xs font-bold text-purple-300 mb-4">تدفق حالة الطلب (Order State Machine)</h3>
+                    <div class="flex justify-between items-center text-center text-xs">
+                        <div class="bg-slate-800 p-2 rounded border border-slate-600">Created</div>
+                        <div class="text-slate-400">➜</div>
+                        <div class="bg-yellow-600 p-2 rounded border border-yellow-400 font-bold">PAID (Escrow)</div>
+                        <div class="text-slate-400">➜</div>
+                        <div class="bg-blue-600 p-2 rounded border border-blue-400">Ready to Pickup</div>
+                        <div class="text-slate-400">➜</div>
+                        <div class="bg-green-600 p-2 rounded border border-green-400 font-bold">COMPLETED</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: FINANCIAL FLOW -->
+            <div class="bg-white text-slate-800 rounded-xl p-6 shadow-inner">
+                <h3 class="text-lg font-bold mb-6 text-center border-b pb-2">مخطط التدفق المالي (Financial Journey)</h3>
+                
+                <div class="relative flex flex-col md:flex-row justify-between items-center gap-4 text-center">
+                    
+                    <!-- Step 1: Customer -->
+                    <div class="relative z-10 w-full md:w-1/5">
+                        <div class="bg-blue-50 border-2 border-blue-200 p-3 rounded-xl mb-2">
+                            <i class="ph ph-user text-2xl text-blue-600"></i>
+                            <div class="font-bold text-sm">محفظة العميل</div>
+                            <div class="text-xs text-red-500 font-bold">- 50,000 ريال</div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="hidden md:block flex-1 h-1 bg-gray-200 relative"><i class="ph ph-caret-left-bold absolute top-[-7px] left-1/2 text-gray-400"></i></div>
+
+                    <!-- Step 2: Gateway -->
+                    <div class="relative z-10 w-full md:w-1/5">
+                        <div class="bg-gray-50 border-2 border-gray-200 p-3 rounded-xl mb-2">
+                            <i class="ph ph-bank text-2xl text-gray-600"></i>
+                            <div class="font-bold text-sm">بوابة الدفع</div>
+                            <div class="text-[10px] text-gray-500">الكريمي / OneCash</div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="hidden md:block flex-1 h-1 bg-gray-200 relative"><i class="ph ph-caret-left-bold absolute top-[-7px] left-1/2 text-gray-400"></i></div>
+
+                    <!-- Step 3: Escrow (Holding) -->
+                    <div class="relative z-10 w-full md:w-1/5 scale-110">
+                        <div class="bg-yellow-50 border-2 border-yellow-400 p-3 rounded-xl mb-2 shadow-lg">
+                            <div class="absolute -top-3 right-0 bg-yellow-400 text-[10px] px-2 rounded font-bold">LOCKED</div>
+                            <i class="ph ph-lock-key text-2xl text-yellow-600"></i>
+                            <div class="font-bold text-sm">محفظة التطبيق (الحجز)</div>
+                            <div class="text-xs text-blue-600 font-bold">50,000 ريال</div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow (Trigger) -->
+                    <div class="hidden md:block flex-1 h-1 border-t-2 border-dashed border-purple-300 relative">
+                        <div class="absolute -top-6 left-1/3 bg-white px-1 text-[10px] text-purple-600 font-bold border rounded border-purple-200">مسح كود الاستلام</div>
+                        <i class="ph ph-caret-left-bold absolute top-[-8px] left-1/2 text-purple-400"></i>
+                    </div>
+
+                    <!-- Step 4: Settlement (Split) -->
+                    <div class="relative z-10 w-full md:w-1/5">
+                        <div class="flex flex-col gap-2">
+                            <!-- Merchant Share -->
+                            <div class="bg-green-50 border border-green-200 p-2 rounded-lg">
+                                <i class="ph ph-storefront text-green-600"></i>
+                                <div class="font-bold text-xs">محفظة التاجر</div>
+                                <div class="text-xs text-green-600 font-bold">+ 45,000</div>
+                            </div>
+                            <!-- App Commission -->
+                            <div class="bg-blue-50 border border-blue-200 p-2 rounded-lg">
+                                <i class="ph ph-coins text-blue-600"></i>
+                                <div class="font-bold text-xs">عمولة التطبيق (10%)</div>
+                                <div class="text-xs text-blue-600 font-bold">+ 5,000</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 2. Admin Panel Analysis -->
+    <section id="admin" class="mb-16">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-r-4 border-blue-600 pr-3">أولاً: لوحة تحكم الأدمن (Admin Panel)</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Admin: Product Management -->
+            <div class="tech-card border-purple-200">
+                <div class="tech-header text-purple-800">
+                    <i class="ph ph-laptop"></i> إدارة المنتجات (الموافقة والمراقبة)
+                </div>
+                <ul class="field-list">
+                    <li>
+                        <span>قائمة المنتجات المعلقة</span>
+                        <span class="text-gray-500">Approve/Reject Products</span>
+                    </li>
+                    <li>
+                        <span>تفاصيل المنتج</span>
+                        <span class="text-gray-500">الصور، المخزون، السعر الأصلي، سعر العرض</span>
+                    </li>
+                    <li>
+                        <span>التحكم في العرض</span>
+                        <span class="text-gray-500">تثبيت في الرئيسية، تمييز (Featured)</span>
+                    </li>
+                    <li>
+                        <span>سجل الحركات (Audit Log)</span>
+                        <span class="text-gray-500">تتبع تغييرات المخزون والأسعار</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Admin: Financial Manager (Escrow) -->
+            <div class="tech-card border-yellow-200">
+                <div class="tech-header text-yellow-700">
+                    <i class="ph ph-bank"></i> الإدارة المالية والضامن (Escrow)
+                </div>
+                <ul class="field-list">
+                    <li>
+                        <span>رصيد الضمان الكلي</span>
+                        <span class="text-gray-500">Total Held Funds</span>
+                    </li>
+                    <li>
+                        <span>تسوية المنازعات</span>
+                        <span class="text-gray-500">Dispute Resolution (Refund/Release)</span>
+                    </li>
+                    <li>
+                        <span>سجل السحوبات</span>
+                        <span class="text-gray-500">Withdrawal Requests (Merchants)</span>
+                    </li>
+                    <li>
+                        <span>تقرير العمولات</span>
+                        <span class="text-gray-500">نسبة التطبيق من المبيعات</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Admin: Service/Voucher Management -->
+            <div class="tech-card">
+                <div class="tech-header text-blue-700">
+                    <i class="ph ph-receipt"></i> إدارة قسائم الخدمات
+                </div>
+                <ul class="field-list">
+                    <li>
+                        <span>إنشاء/تعديل العرض</span>
+                        <span class="text-gray-500">Service Deal CRUD</span>
+                    </li>
+                    <li>
+                        <span>إعدادات الصلاحية</span>
+                        <span class="text-gray-500">Expiry Date, Redemption Rules</span>
+                    </li>
+                    <li>
+                        <span>تقارير الاستخدام</span>
+                        <span class="text-gray-500">Redeemed vs Expired Vouchers</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. Merchant Panel Analysis -->
+    <section id="merchant" class="mb-16">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-r-4 border-orange-600 pr-3">ثانياً: لوحة تحكم التاجر (Merchant Panel)</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Merchant: Add Product Screen -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <i class="ph ph-plus-circle"></i> شاشة "إضافة منتج جديد" (تفصيلي)
+                </div>
+                <div class="p-4 bg-slate-50 text-xs border-b">
+                    الحقول المطلوبة لإدخال منتج في نظام Click & Collect:
+                </div>
+                <ul class="field-list">
+                    <li><span>اسم المنتج</span> <span class="text-gray-400">Text (100 chars)</span></li>
+                    <li><span>الوصف التفصيلي</span> <span class="text-gray-400">Rich Text (HTML)</span></li>
+                    <li><span>صور المنتج</span> <span class="text-gray-400">Upload (Max 5, WebP optimized)</span></li>
+                    <li><span>المخزون (Stock)</span> <span class="text-purple-600 font-bold">Integer (حرج لنظام الحجز)</span></li>
+                    <li><span>السعر الأساسي</span> <span class="text-gray-400">Decimal</span></li>
+                    <li><span>سعر العرض (الخصم)</span> <span class="text-gray-400">Decimal</span></li>
+                    <li><span>فترة الاستلام</span> <span class="text-gray-400">مثلاً: متاح لمدة 3 أيام</span></li>
+                </ul>
+                <div class="p-3 bg-purple-50 text-purple-700 text-xs font-bold text-center">
+                    زر: "استخدم Gemini لتوليد الوصف" <i class="ph ph-sparkle"></i>
+                </div>
+            </div>
+
+            <!-- Merchant: Order Management & Scanning -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <i class="ph ph-scan"></i> إدارة الطلبات والمسح (Operations)
+                </div>
+                <div class="p-4">
+                    <h4 class="font-bold text-sm mb-2">ماسح QR Code (مدمج):</h4>
+                    <p class="text-xs text-gray-500 mb-4">يعمل هذا الماسح بطريقتين مختلفتين حسب نوع الكود:</p>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-1 bg-blue-50 p-3 rounded border border-blue-200 text-center">
+                            <span class="block font-bold text-blue-800 text-sm">قسيمة خدمة</span>
+                            <span class="text-[10px] text-gray-600">يخصم "عدد مرات" استخدام</span>
+                            <span class="block mt-1 text-green-600 font-bold text-xs">✓ Valid</span>
+                        </div>
+                        <div class="flex-1 bg-purple-50 p-3 rounded border border-purple-200 text-center">
+                            <span class="block font-bold text-purple-800 text-sm">استلام منتج</span>
+                            <span class="text-[10px] text-gray-600">يحرر "المبلغ المحجوز"</span>
+                            <span class="block mt-1 text-yellow-600 font-bold text-xs">🔓 Release Funds</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="field-list mt-2">
+                    <li><span>قائمة طلبات الاستلام</span> <span class="text-gray-500">Ready for Pickup List</span></li>
+                    <li><span>سجل العمليات</span> <span class="text-gray-500">Offline Sync Queue</span></li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. Customer App Analysis -->
+    <section id="customer" class="mb-16">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-r-4 border-green-600 pr-3">ثالثاً: تطبيق العميل (Customer App)</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Screen 1: Home & Discovery -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <i class="ph ph-house"></i> الشاشة الرئيسية (Discovery)
+                </div>
+                <div class="p-4 space-y-3">
+                    <div class="bg-gray-100 h-8 rounded flex items-center px-2 text-gray-400 text-xs">
+                        <i class="ph ph-magnifying-glass mr-2"></i> ابحث أو اسأل المساعد الذكي...
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-bold border border-purple-200">منتجات ملموسة 💻</div>
+                        <div class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold border border-blue-200">قسائم خدمية 🎟️</div>
+                    </div>
+                    <!-- Deal Card Simulation -->
+                    <div class="border rounded p-2 flex gap-2">
+                        <div class="w-12 h-12 bg-gray-300 rounded"></div>
+                        <div>
+                            <div class="text-xs font-bold">لابتوب HP Gaming</div>
+                            <div class="text-[10px] text-gray-500 line-through">600$</div>
+                            <div class="text-xs font-bold text-red-600">300$ (50% OFF)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 2: My Purchases (THE REQUESTED ADDITION) -->
+            <div class="tech-card border-2 border-green-500 relative">
+                <div class="absolute top-0 left-0 bg-green-500 text-white text-[10px] px-2 py-1 rounded-br">مطلوب</div>
+                <div class="tech-header">
+                    <i class="ph ph-bag"></i> شاشة "مشترياتي" (My Purchases)
+                </div>
+                <div class="p-4">
+                    <!-- Tabs -->
+                    <div class="flex border-b mb-3">
+                        <div class="flex-1 text-center text-xs font-bold text-blue-600 border-b-2 border-blue-600 pb-1">النشطة</div>
+                        <div class="flex-1 text-center text-xs text-gray-500 pb-1">المستخدمة</div>
+                        <div class="flex-1 text-center text-xs text-gray-500 pb-1">منتهية</div>
+                    </div>
+
+                    <!-- Item 1: Product (Pickup) -->
+                    <div class="bg-white border border-purple-200 rounded p-2 mb-2 shadow-sm">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-xs font-bold text-slate-800">جوال Samsung S24</span>
+                            <span class="tag-product">استلام منتج</span>
+                        </div>
+                        <div class="text-[10px] text-gray-500 mb-2">متجر: عالم التقنية - فرع حدة</div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] bg-yellow-100 text-yellow-700 px-1 rounded">مدفوع (محجوز)</span>
+                            <button class="bg-purple-600 text-white text-[10px] px-2 py-1 rounded">عرض كود الاستلام</button>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Service Voucher -->
+                    <div class="bg-white border border-blue-200 rounded p-2 mb-2 shadow-sm">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-xs font-bold text-slate-800">وجبة غداء لشخصين</span>
+                            <span class="tag-service">قسيمة خدمة</span>
+                        </div>
+                        <div class="text-[10px] text-gray-500 mb-2">مطعم: الشيباني رويال</div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] bg-green-100 text-green-700 px-1 rounded">فعال</span>
+                            <button class="bg-blue-600 text-white text-[10px] px-2 py-1 rounded">عرض القسيمة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Checkout & Escrow Payment -->
+            <div class="tech-card">
+                <div class="tech-header">
+                    <i class="ph ph-credit-card"></i> شاشة الدفع (Checkout)
+                </div>
+                <div class="p-4 text-xs">
+                    <div class="mb-3 font-bold text-slate-700">طريقة الدفع:</div>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 border p-2 rounded hover:bg-gray-50 cursor-pointer">
+                            <div class="w-4 h-4 rounded-full border-2 border-blue-600 flex items-center justify-center"><div class="w-2 h-2 bg-blue-600 rounded-full"></div></div>
+                            <span>محفظة الكريمي (mFloos)</span>
+                        </div>
+                        <div class="flex items-center gap-2 border p-2 rounded hover:bg-gray-50 cursor-pointer">
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300"></div>
+                            <span>ONE Cash</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-2 bg-yellow-50 border border-yellow-200 rounded text-[10px] text-yellow-800">
+                        <i class="ph ph-lock-key"></i> <strong>حماية المشتري:</strong> سيتم حجز المبلغ ولن يتم تسليمه للتاجر إلا بعد تأكيد استلامك للمنتج.
+                    </div>
+
+                    <button class="w-full bg-slate-900 text-white font-bold py-2 rounded mt-4">تأكيد الدفع (30,000 ريال)</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. Technical Stack & API Structure -->
+    <section class="mb-16 bg-slate-900 text-slate-300 rounded-2xl p-8">
+        <h2 class="text-xl font-bold text-white mb-6">الهيكلية التقنية (Technical Architecture)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+            <div>
+                <h3 class="text-blue-400 font-bold mb-2">قاعدة البيانات (Database Schema Snippets)</h3>
+                <pre class="bg-slate-950 p-4 rounded-lg overflow-x-auto font-mono text-xs text-green-400">
+// Products Table
+Product {
+  id: UUID,
+  merchant_id: UUID,
+  stock_qty: Integer,  // Critical for locking
+  is_physical: Boolean // True for Products
+}
+
+// Orders Table (Escrow Support)
+Order {
+  id: UUID,
+  user_id: UUID,
+  total_amount: Decimal,
+  payment_status: 'HELD_IN_ESCROW',
+  delivery_status: 'READY_FOR_PICKUP',
+  escrow_release_date: Timestamp (Nullable)
+}
+                </pre>
+            </div>
+            <div>
+                <h3 class="text-purple-400 font-bold mb-2">API Endpoints (Examples)</h3>
+                <ul class="space-y-2 font-mono text-xs">
+                    <li class="flex gap-2"><span class="bg-green-900 text-green-300 px-1 rounded">POST</span> <span>/api/v1/orders/create (Atomic Transaction)</span></li>
+                    <li class="flex gap-2"><span class="bg-blue-900 text-blue-300 px-1 rounded">POST</span> <span>/api/v1/merchant/scan-pickup</span> <span class="text-gray-500">// Triggers funds release</span></li>
+                    <li class="flex gap-2"><span class="bg-yellow-900 text-yellow-300 px-1 rounded">GET</span> <span>/api/v1/user/my-purchases?type=product</span></li>
+                    <li class="flex gap-2"><span class="bg-purple-900 text-purple-300 px-1 rounded">POST</span> <span>/api/v1/ai/generate-description (Gemini)</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-slate-500 text-sm py-8 border-t">
+        <p>تم إعداد هذا التحليل الفني ليكون المرجع النهائي لتطوير نظام "وفرها - اليمن".</p>
+        <p class="font-bold mt-2">© 2026 جميع الحقوق محفوظة</p>
+    </footer>
+
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+</html>

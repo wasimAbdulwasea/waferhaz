@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAFFARHA.YE | Investor Pitch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Changa:wght@500;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: "Tajawal", sans-serif;
+            color: #fff;
+            background: #051937;
+            overflow-x: hidden
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: "Changa", sans-serif
+        }
+
+        .shell {
+            width: min(1080px, 100% - 2rem);
+            margin: 0 auto
+        }
+
+        /* pitch slides */
+        .pitch {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 3rem 0;
+            overflow: hidden
+        }
+
+        .pitch::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: .12;
+            z-index: 0
+        }
+
+        .pitch:nth-child(1)::before {
+            background: #06b6d4;
+            top: -100px;
+            right: -100px
+        }
+
+        .pitch:nth-child(2)::before {
+            background: #f59e0b;
+            bottom: -80px;
+            left: -80px
+        }
+
+        .pitch:nth-child(3)::before {
+            background: #10b981;
+            top: 50%;
+            right: -80px
+        }
+
+        .pitch:nth-child(4)::before {
+            background: #e11d48;
+            bottom: -60px;
+            right: -60px
+        }
+
+        .pitch:nth-child(5)::before {
+            background: #8b5cf6;
+            top: -100px;
+            left: -100px
+        }
+
+        .pitch:nth-child(6)::before {
+            background: #06b6d4;
+            bottom: -100px;
+            right: 50%
+        }
+
+        .pitch-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%
+        }
+
+        /* glass */
+        .glass {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 1.2rem;
+            backdrop-filter: blur(10px)
+        }
+
+        /* gradient texts */
+        .g-cyan {
+            background: linear-gradient(115deg, #06b6d4, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .g-amber {
+            background: linear-gradient(115deg, #f59e0b, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        /* big number */
+        .big-num {
+            font-family: "Changa", sans-serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1
+        }
+
+        /* nav dots */
+        .dot-nav {
+            position: fixed;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .dot-nav a {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .25);
+            display: block;
+            transition: all .3s
+        }
+
+        .dot-nav a.active {
+            background: #06b6d4;
+            box-shadow: 0 0 12px rgba(6, 182, 212, .5);
+            transform: scale(1.3)
+        }
+
+        /* img */
+        .pitch-img {
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, .12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .4)
+        }
+
+        /* reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .7s, transform .7s
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: none
+        }
+
+        /* print */
+        @media print {
+            .dot-nav {
+                display: none
+            }
+
+            .pitch {
+                min-height: auto;
+                page-break-after: always;
+                padding: 20px 0
+            }
+
+            body {
+                background: #fff;
+                color: #0f172a
+            }
+
+            .glass {
+                background: #f8fafc;
+                border-color: #e2e8f0
+            }
+
+            .g-cyan,
+            .g-amber {
+                -webkit-text-fill-color: #0f172a
+            }
+        }
+    </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+
+<body>
+
+    <nav class="dot-nav" id="dots">
+        <a href="#p1" class="active" title="المشكلة"></a>
+        <a href="#p2" title="الحل"></a>
+        <a href="#p3" title="المال"></a>
+        <a href="#p4" title="الميزة"></a>
+        <a href="#p5" title="الطلب"></a>
+        <a href="#p6" title="الخطوة"></a>
+    </nav>
+
+    <!-- ═══ 1: PROBLEM ═══ -->
+    <section id="p1" class="pitch">
+        <div class="pitch-inner shell text-center reveal">
+            <span
+                class="inline-flex items-center gap-2 text-cyan-300 text-sm font-bold tracking-wider mb-6 uppercase">Investor
+                Pitch 2026</span>
+            <h1 style="font-size:clamp(2.2rem,5vw,4rem);line-height:1.15" class="mb-6">المستهلك اليمني يبحث عن <span
+                    class="g-cyan">عروض وتوفير</span><br>لكن لا توجد منصة. <span class="g-amber">حتى الآن.</span></h1>
+            <p class="text-slate-300 text-lg max-w-2xl mx-auto leading-8 mb-8">
+                27% نمو سنوي في المحافظ الإلكترونية (الكريمي، OneCash)، ملايين مستخدمي الإنترنت، صفر منصات كوبونات محلية
+                رقمية. الفجوة واضحة.
+            </p>
+            <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+                <div class="glass p-4 rounded-xl">
+                    <div class="big-num g-cyan">0</div>
+                    <div class="text-xs text-slate-400 font-bold mt-1">منصات كوبونات يمنية</div>
+                </div>
+                <div class="glass p-4 rounded-xl">
+                    <div class="big-num g-amber">27%</div>
+                    <div class="text-xs text-slate-400 font-bold mt-1">نمو المحافظ</div>
+                </div>
+                <div class="glass p-4 rounded-xl">
+                    <div class="big-num text-white">∞</div>
+                    <div class="text-xs text-slate-400 font-bold mt-1">الفرصة</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ 2: SOLUTION ═══ -->
+    <section id="p2" class="pitch">
+        <div class="pitch-inner shell reveal">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <span class="text-amber-400 text-sm font-bold tracking-wider uppercase mb-3 block">THE
+                        SOLUTION</span>
+                    <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.2" class="mb-4"><span
+                            class="g-cyan">وفرها</span> — منصة متكاملة</h2>
+                    <p class="text-slate-300 text-lg leading-8 mb-6">ليست مجرد كوبونات. نحن نبني نظام بيئي رقمي يمني
+                        يشمل:</p>
+                    <div class="space-y-3">
+                        <div class="glass p-4 flex items-center gap-3"><i
+                                class="ph ph-receipt text-2xl text-cyan-400"></i>
+                            <div><strong>القسائم الرقمية</strong><span class="text-sm text-slate-400 block">شراء
+                                    واستخدام فوري عبر QR</span></div>
+                        </div>
+                        <div class="glass p-4 flex items-center gap-3"><i
+                                class="ph ph-package text-2xl text-amber-400"></i>
+                            <div><strong>Click & Collect + Escrow</strong><span
+                                    class="text-sm text-slate-400 block">منتجات ملموسة بحماية مالية كاملة</span></div>
+                        </div>
+                        <div class="glass p-4 flex items-center gap-3"><i
+                                class="ph ph-sparkle text-2xl text-fuchsia-400"></i>
+                            <div><strong>Gemini AI</strong><span class="text-sm text-slate-400 block">مساعد ذكي + صانع
+                                    محتوى للتاجر</span></div>
+                        </div>
+                        <div class="glass p-4 flex items-center gap-3"><i
+                                class="ph ph-credit-card text-2xl text-emerald-400"></i>
+                            <div><strong>دفع محلي 100%</strong><span class="text-sm text-slate-400 block">الكريمي ·
+                                    OneCash · جوالي</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div><img src="img/app-home.png" alt="App" class="pitch-img w-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ 3: BUSINESS MODEL ═══ -->
+    <section id="p3" class="pitch">
+        <div class="pitch-inner shell reveal">
+            <div class="text-center mb-8">
+                <span class="text-emerald-400 text-sm font-bold tracking-wider uppercase mb-3 block">BUSINESS
+                    MODEL</span>
+                <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.2" class="mb-3">نموذج الربح المتعدد</h2>
+                <p class="text-slate-300 text-lg max-w-xl mx-auto">4 مصادر دخل متنوعة تُقلّل المخاطر وتضمن استدامة النمو
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass p-6 text-center">
+                    <div class="big-num text-cyan-400" style="font-size:2.5rem">40%</div><strong
+                        class="block mt-2 text-lg">عمولة القسائم</strong>
+                    <p class="text-xs text-slate-400 mt-1">عمولة من كل عملية بيع قسيمة</p>
+                </div>
+                <div class="glass p-6 text-center">
+                    <div class="big-num text-blue-400" style="font-size:2.5rem">35%</div><strong
+                        class="block mt-2 text-lg">Escrow Products</strong>
+                    <p class="text-xs text-slate-400 mt-1">عمولة 10% من المنتجات المحمية</p>
+                </div>
+                <div class="glass p-6 text-center">
+                    <div class="big-num text-amber-400" style="font-size:2.5rem">15%</div><strong
+                        class="block mt-2 text-lg">إعلانات مُميّزة</strong>
+                    <p class="text-xs text-slate-400 mt-1">عرض مميز ورأس قائمة</p>
+                </div>
+                <div class="glass p-6 text-center">
+                    <div class="big-num text-emerald-400" style="font-size:2.5rem">10%</div><strong
+                        class="block mt-2 text-lg">رؤى البيانات</strong>
+                    <p class="text-xs text-slate-400 mt-1">تحليلات مجهولة للقطاعات</p>
+                </div>
+            </div>
+            <div class="glass p-4 mt-6 text-center">
+                <p class="text-lg text-slate-200"><strong class="text-amber-300">التقسيم المالي النموذجي:</strong> عملية
+                    بقيمة 50,000 ريال → <span class="text-emerald-300 font-bold">45,000</span> للتاجر + <span
+                        class="text-amber-300 font-bold">5,000</span> للمنصة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ 4: COMPETITIVE EDGE ═══ -->
+    <section id="p4" class="pitch">
+        <div class="pitch-inner shell reveal">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <span class="text-fuchsia-400 text-sm font-bold tracking-wider uppercase mb-3 block">COMPETITIVE
+                        EDGE</span>
+                    <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.2" class="mb-3">لماذا نحن المختلفون؟
+                    </h2>
+                    <p class="text-slate-300 text-lg leading-8 mb-6">ميزات تنافسية لا يمتلكها أي منافس في السوق:</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
+                                <i class="ph ph-lock-key text-lg text-yellow-400"></i></div>
+                            <div><strong>أول Escrow تجاري يمني</strong>
+                                <p class="text-sm text-slate-400 mt-1">حماية كاملة للمشتري والتاجر — لم يسبق تطبيقها
+                                    محلياً</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
+                                <i class="ph ph-brain text-lg text-cyan-400"></i></div>
+                            <div><strong>ذكاء اصطناعي حقيقي (LLM)</strong>
+                                <p class="text-sm text-slate-400 mt-1">ليس روبوت إجابات جاهزة — Gemini يفهم السياق
+                                    اليمني</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                                <i class="ph ph-wallet text-lg text-green-400"></i></div>
+                            <div><strong>تكامل دفع محلي 100%</strong>
+                                <p class="text-sm text-slate-400 mt-1">الكريمي + OneCash + جوالي — بدون فيزا أو
+                                    ماستركارد</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0">
+                                <i class="ph ph-gift text-lg text-purple-400"></i></div>
+                            <div><strong>محرك الإهداء</strong>
+                                <p class="text-sm text-slate-400 mt-1">إهداء قسائم وتغليف افتراضي — تجربة فريدة في
+                                    المنطقة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <img src="img/escrow-flow.png" alt="Escrow" class="pitch-img w-full">
+                    <img src="img/payment-checkout.png" alt="Payment" class="pitch-img w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ 5: ASK ═══ -->
+    <section id="p5" class="pitch">
+        <div class="pitch-inner shell reveal">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <img src="img/admin-dashboard.png" alt="Dashboard" class="pitch-img w-full">
+                    <img src="img/merchant-panel.png" alt="Merchant" class="pitch-img w-full">
+                </div>
+                <div>
+                    <span class="text-rose-400 text-sm font-bold tracking-wider uppercase mb-3 block">THE ASK</span>
+                    <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.2" class="mb-4">خطة التنفيذ والدفعات
+                    </h2>
+                    <p class="text-slate-300 text-lg leading-8 mb-5">10 مراحل واضحة بدفعات مرتبطة بالإنجاز — لا مخاطرة
+                        مالية:</p>
+                    <div class="space-y-3">
+                        <div class="glass p-3 flex items-center justify-between"><span class="font-bold">م1-3:
+                                التحليل</span><span class="text-amber-300 font-bold">10%</span></div>
+                        <div class="glass p-3 flex items-center justify-between"><span class="font-bold">م4-5:
+                                التصميم</span><span class="text-amber-300 font-bold">20%</span></div>
+                        <div class="glass p-3 flex items-center justify-between"><span class="font-bold">م6:
+                                التطوير</span><span class="text-amber-300 font-bold">20%</span></div>
+                        <div class="glass p-3 flex items-center justify-between"><span class="font-bold">م7-8:
+                                الاختبار</span><span class="text-amber-300 font-bold">30%</span></div>
+                        <div class="glass p-3 flex items-center justify-between"><span class="font-bold">م9-10:
+                                التشغيل</span><span class="text-emerald-300 font-bold">20%</span></div>
+                    </div>
+                    <div class="glass p-4 mt-4 text-center">
+                        <p class="text-sm text-slate-300">هدف الجاهزية: <span
+                                class="text-emerald-300 font-bold text-lg">99.9%</span> | NFR Priority: <span
+                                class="text-cyan-300 font-bold text-lg">Security First</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ 6: CTA ═══ -->
+    <section id="p6" class="pitch">
+        <div class="pitch-inner shell text-center reveal">
+            <span class="text-cyan-300 text-sm font-bold tracking-wider uppercase mb-4 block">LET'S BUILD THE
+                FUTURE</span>
+            <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.15" class="mb-5">السوق جاهز. المنتج
+                مُصمّم.<br><span class="g-amber">الخطوة التالية: الشراكة.</span></h1>
+            <p class="text-slate-300 text-lg max-w-2xl mx-auto leading-8 mb-8">
+                مشروع وفرها يمتلك الوثائق التقنية (BRD/SRS/SDD) الكاملة، واجهات مصممة، معمارية جاهزة، ونموذج مالي واضح.
+                كل ما ينقص هو شريك يؤمن بالسوق اليمني.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <a href="Waffarha_Presentation_2026.html"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full text-sm hover:shadow-lg hover:shadow-cyan-500/30 transition-shadow no-underline"><i
+                        class="ph ph-eye"></i> العرض الكامل</a>
+                <a href="Waffarha_Print_2026.html"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white font-bold rounded-full text-sm hover:bg-white/15 transition no-underline"><i
+                        class="ph ph-printer"></i> نسخة الطباعة</a>
+            </div>
+            <div class="glass p-5 max-w-md mx-auto text-sm text-slate-300">
+                <p>© 2026 WAFFARHA.YE | وثيقة سرية لل........</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Reveal animation
+        const els = document.querySelectorAll(".reveal");
+        const obs = new IntersectionObserver(e => e.forEach(en => { if (en.isIntersecting) en.target.classList.add("show") }), { threshold: .15 });
+        els.forEach(el => obs.observe(el));
+
+        // Active dot
+        const sections = document.querySelectorAll(".pitch");
+        const dots = document.querySelectorAll("#dots a");
+        const dotObs = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { dots.forEach(d => d.classList.remove("active")); const idx = [...sections].indexOf(en.target); if (dots[idx]) dots[idx].classList.add("active") } }) }, { threshold: .5 });
+        sections.forEach(s => dotObs.observe(s));
+    </script>
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+
+</html>

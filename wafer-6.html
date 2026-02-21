@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع منصة العروض والقسائم | العرض التقديمي الشامل 2026</title>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Phosphor Icons for Gemini Sparkles -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Design System: "Trust & Dynamism" --- */
+        :root {
+            --primary: #1e40af;       /* Deep Blue: Trust */
+            --secondary: #f97316;     /* Orange: Action */
+            --product: #7c3aed;       /* Purple: Products Feature */
+            --ai: #0ea5e9;            /* Sky Blue: AI Feature */
+            --bg-light: #f1f5f9;
+            --text-main: #0f172a;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            scroll-behavior: smooth;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* AI Gradient Text */
+        .text-gradient-ai {
+            background: linear-gradient(to right, #0ea5e9, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cards with Glassmorphism */
+        .pro-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pro-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Custom Flowchart Nodes */
+        .node {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 80px;
+        }
+
+        /* Connectors */
+        .connector-h {
+            flex-grow: 1;
+            height: 3px;
+            background: #cbd5e1;
+            margin: 0 0.5rem;
+            position: relative;
+        }
+        .connector-h::after {
+            content: '◀';
+            position: absolute;
+            left: -5px;
+            top: -7px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* Chart Containers */
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Navigation */
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Chat Bubble Animation */
+        .chat-bubble {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl font-black text-blue-800 tracking-tighter">YEMEN<span class="text-orange-500">DEALS</span></span>
+                </div>
+                <div class="hidden md:flex space-x-6 space-x-reverse text-sm font-medium text-gray-600">
+                    <a href="#vision" class="hover:text-blue-600 transition">الرؤية</a>
+                    <a href="#ai-features" class="hover:text-sky-600 transition font-bold text-sky-600 flex items-center gap-1"><i class="ph ph-sparkle"></i> الذكاء الاصطناعي</a>
+                    <a href="#products" class="hover:text-purple-600 transition">المنتجات</a>
+                    <a href="#services" class="hover:text-blue-600 transition">القسائم</a>
+                    <a href="#tech" class="hover:text-blue-600 transition">التقنية</a>
+                    <a href="#roadmap" class="hover:text-orange-600 transition">المالية</a>
+                </div>
+                <a href="#contact" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">دعم التنفيذ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="vision" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden relative">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-blue-400 opacity-10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-orange-400 opacity-10 blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-xs font-bold mb-6 tracking-wide border border-blue-200">يناير 2026 - وثيقة استراتيجية</span>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-tight">
+                منظومة <span class="text-gradient">التوفير الذكي</span> المتكاملة
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 leading-relaxed">
+                دراسة شاملة (BRD & SRS) لإنشاء منصة يمنية تربط بين <strong>خدمات التوفير</strong> و <strong>سوق المنتجات المخفضة</strong>، مدعومة بالذكاء الاصطناعي والدفع الإلكتروني المحلي.
+            </p>
+            
+            <div class="mt-10 flex justify-center gap-4">
+                <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 w-32">
+                    <span class="text-3xl font-bold text-blue-600">27%</span>
+                    <span class="text-xs text-gray-500 mt-1">نمو المحافظ</span>
+                </div>
+                <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 w-32">
+                    <span class="text-3xl font-bold text-sky-500"><i class="ph ph-sparkle"></i> AI</span>
+                    <span class="text-xs text-gray-500 mt-1">مدعوم بـ Gemini</span>
+                </div>
+                <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 w-32">
+                    <span class="text-3xl font-bold text-orange-600">IP</span>
+                    <span class="text-xs text-gray-500 mt-1">ملكية كاملة</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 pb-20">
+
+        <!-- NEW SECTION: AI Integration (Gemini) -->
+        <section id="ai-features" class="relative overflow-hidden py-10">
+            <!-- Dark modern background for contrast -->
+            <div class="absolute inset-0 bg-slate-900 rounded-3xl -z-10 shadow-2xl"></div>
+            <div class="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            
+            <div class="p-8 md:p-12">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white flex items-center gap-3">
+                            <i class="ph ph-sparkle text-sky-400 text-4xl"></i>
+                            <span class="text-gradient-ai">الابتكار بالذكاء الاصطناعي</span>
+                        </h2>
+                        <p class="text-slate-400 mt-2 text-lg">دمج نموذج <strong>Google Gemini API</strong> لتقديم تجربة استخدام ثورية.</p>
+                    </div>
+                    <span class="bg-sky-500/20 border border-sky-500/30 text-sky-300 px-4 py-2 rounded-full font-bold text-sm backdrop-blur-sm">Powered by Gemini</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Feature 1: User AI Assistant -->
+                    <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:bg-slate-800/80 transition group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-sky-600/20 rounded-lg text-sky-400">
+                                <i class="ph ph-chat-circle-dots text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-slate-500">Gemini Pro Model</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">المساعد الشخصي الذكي</h3>
+                        <p class="text-slate-400 text-sm mb-6">يمكن للمستخدم التحدث مع التطبيق للعثور على العروض بدلاً من البحث التقليدي.</p>
+                        
+                        <!-- Chat Simulation -->
+                        <div class="bg-slate-900 rounded-xl p-4 border border-slate-700/50 space-y-3 text-xs">
+                            <div class="flex gap-2 items-end">
+                                <div class="w-6 h-6 rounded-full bg-slate-700 flex-shrink-0"></div>
+                                <div class="bg-slate-700 text-slate-200 p-2 rounded-t-lg rounded-bl-lg max-w-[80%]">
+                                    أشتي عرض غداء عائلي رخيص في حدة؟ 🍱
+                                </div>
+                            </div>
+                            <div class="flex gap-2 items-end flex-row-reverse chat-bubble">
+                                <div class="w-6 h-6 rounded-full bg-sky-600 flex-shrink-0 flex items-center justify-center text-white"><i class="ph ph-sparkle"></i></div>
+                                <div class="bg-sky-600/20 border border-sky-500/30 text-sky-100 p-2 rounded-t-lg rounded-br-lg max-w-[90%]">
+                                    لقيت لك عرض ممتاز في "مطعم البيت الصنعاني"! 🌟<br>
+                                    خصم 30% على وجبة العائلة (5 أشخاص). السعر بعد الخصم 6000 ريال فقط.
+                                </div>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-sm font-bold transition flex items-center justify-center gap-2">
+                             تجربة المساعد <i class="ph ph-arrow-left"></i>
+                        </button>
+                    </div>
+
+                    <!-- Feature 2: Merchant AI Tool -->
+                    <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:bg-slate-800/80 transition group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-purple-600/20 rounded-lg text-purple-400">
+                                <i class="ph ph-pencil-simple-slash text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-slate-500">Gemini Content Gen</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">محرر العروض الذكي للتجار</h3>
+                        <p class="text-slate-400 text-sm mb-6">أداة تساعد التجار على كتابة وصف تسويقي جذاب للعروض بضغطة زر واحدة.</p>
+
+                        <!-- Tool Simulation -->
+                        <div class="bg-slate-900 rounded-xl p-4 border border-slate-700/50 space-y-3 text-xs">
+                            <div class="border-b border-slate-800 pb-2 mb-2">
+                                <span class="text-slate-500 block mb-1">مدخلات التاجر:</span>
+                                <span class="text-slate-300 bg-slate-800 px-2 py-1 rounded inline-block">برجر</span>
+                                <span class="text-slate-300 bg-slate-800 px-2 py-1 rounded inline-block">خصم 50%</span>
+                            </div>
+                            <div>
+                                <span class="text-sky-400 block mb-1 flex items-center gap-1"><i class="ph ph-sparkle"></i> النتيجة المقترحة:</span>
+                                <p class="text-slate-200 italic">"جوعان؟ 🍔 دلع نفسك بألذ برجر في المدينة بنص السعر! العرض ساري لفترة محدودة، اطلب الآن واستمتع بالطعم الخرافي."</p>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-bold transition flex items-center justify-center gap-2">
+                             توليد وصف تلقائي ✨
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: Strategic Addition (The Products) -->
+        <section id="products" class="relative">
+            <div class="absolute inset-0 bg-purple-50 rounded-3xl -z-10 transform -rotate-1"></div>
+            <div class="pro-card p-8 md:p-12 border-t-4 border-purple-600">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900">1. الميزة الاستراتيجية: سوق المنتجات (Click & Collect)</h2>
+                        <p class="text-gray-600 mt-2">تحويل المنصة من "تطبيق خصومات" إلى "سوق مالي آمن" يضمن حقوق الطرفين.</p>
+                    </div>
+                    <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-lg font-bold text-sm">ميزة أساسية</span>
+                </div>
+
+                <!-- Product Flowchart -->
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-center justify-center text-center mt-10">
+                    <!-- Step 1 -->
+                    <div class="node bg-white border-2 border-purple-200">
+                        <div class="text-2xl mb-2">🔥</div>
+                        <div class="text-purple-900">عرض منتج حصري</div>
+                        <div class="text-xs text-gray-500 mt-1">لابتوب (-50%)</div>
+                    </div>
+
+                    <div class="hidden lg:block connector-h"></div>
+                    
+                    <!-- Step 2 -->
+                    <div class="node bg-white border-2 border-purple-200">
+                        <div class="text-2xl mb-2">💳</div>
+                        <div class="text-purple-900">دفع كامل المبلغ</div>
+                        <div class="text-xs text-gray-500 mt-1">عبر (الكريمي/ون كاش)</div>
+                    </div>
+
+                    <div class="hidden lg:block connector-h"></div>
+
+                    <!-- Step 3 (The Core) -->
+                    <div class="node bg-yellow-50 border-2 border-yellow-400 scale-110 shadow-lg z-10">
+                        <div class="text-2xl mb-2">🔒</div>
+                        <div class="text-yellow-800 font-black">حجز الأموال (Escrow)</div>
+                        <div class="text-xs text-yellow-700 mt-1">المنصة كضامن</div>
+                    </div>
+
+                    <div class="hidden lg:block connector-h"></div>
+
+                    <!-- Step 4 -->
+                    <div class="node bg-white border-2 border-purple-200">
+                        <div class="text-2xl mb-2">🏪</div>
+                        <div class="text-purple-900">الاستلام من الفرع</div>
+                        <div class="text-xs text-gray-500 mt-1">مسح كود الاستلام</div>
+                    </div>
+
+                    <div class="hidden lg:block connector-h"></div>
+
+                    <!-- Step 5 -->
+                    <div class="node bg-green-50 border-2 border-green-500">
+                        <div class="text-2xl mb-2">💰</div>
+                        <div class="text-green-900">تحرير المبلغ</div>
+                        <div class="text-xs text-gray-500 mt-1">إيداع لمحفظة التاجر</div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-purple-100 p-4 rounded-lg text-sm text-purple-800 font-medium text-center">
+                    تقنية: يتم استخدام "Atomic Transactions" لضمان عدم بيع المخزون المحدود لأكثر من شخص في نفس اللحظة.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Core Services (Vouchers) -->
+        <section id="services" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="pro-card p-8">
+                <h3 class="text-xl font-bold text-blue-900 mb-6 flex items-center gap-2">
+                    <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+                    سيناريو الخدمات والإهداء
+                </h3>
+                <ul class="space-y-6">
+                    <li class="flex gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">1</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">شراء القسيمة</h4>
+                            <p class="text-sm text-gray-600">شراء "جلسة مساج" أو "وجبة غداء" بخصم مسبق.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">2</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">محرك الإهداء (Gifting Engine)</h4>
+                            <p class="text-sm text-gray-600">إرسال القسيمة كهدية عبر WhatsApp لشخص آخر (لا يشترط وجود التطبيق لديه).</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold">3</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">الاستخدام (Redemption)</h4>
+                            <p class="text-sm text-gray-600">التاجر يمسح الكود. يعمل النظام بوضع (Offline-Sync) إذا انقطع النت.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Revenue Chart -->
+            <div class="pro-card p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">نموذج الربح المتطور (Revenue Model)</h3>
+                <p class="text-sm text-gray-500 mb-6">كيف يؤثر دمج "المنتجات" والذكاء الاصطناعي على العوائد المالية؟</p>
+                <div class="chart-wrapper">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Technical Architecture (SRS) -->
+        <section id="tech" class="pro-card p-8 bg-slate-900 text-white border-none shadow-xl">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-slate-700 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-blue-400">البنية التقنية (SRS Architecture)</h2>
+                    <p class="text-slate-400 mt-1">تصميم يراعي ظروف الإنترنت في اليمن (Latency & Connectivity).</p>
+                </div>
+                <div class="flex gap-2 mt-4 md:mt-0">
+                    <span class="px-3 py-1 rounded bg-slate-800 text-xs font-mono">Flutter</span>
+                    <span class="px-3 py-1 rounded bg-slate-800 text-xs font-mono">Node.js</span>
+                    <span class="px-3 py-1 rounded bg-slate-800 text-xs font-mono">PostgreSQL</span>
+                    <span class="px-3 py-1 rounded bg-sky-900 text-sky-200 text-xs font-mono border border-sky-600">Gemini API</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <div class="p-4 bg-slate-800 rounded-xl border border-slate-700">
+                    <div class="text-3xl mb-2">📱</div>
+                    <div class="font-bold text-white mb-1">واجهة المستخدم</div>
+                    <div class="text-xs text-slate-400">تطبيق خفيف (Lightweight) يدعم الكاشينج القوي.</div>
+                </div>
+                <div class="p-4 bg-slate-800 rounded-xl border border-slate-700">
+                    <div class="text-3xl mb-2">🔄</div>
+                    <div class="font-bold text-white mb-1">API Gateway</div>
+                    <div class="text-xs text-slate-400">إدارة الطلبات وتوجيهها للخدمات المصغرة.</div>
+                </div>
+                <div class="p-4 bg-slate-800 rounded-xl border border-slate-700">
+                    <div class="text-3xl mb-2">☁️</div>
+                    <div class="font-bold text-white mb-1">Backend Core</div>
+                    <div class="text-xs text-slate-400">إدارة العروض، المستخدمين، والمحافظ المالية.</div>
+                </div>
+                <div class="p-4 bg-slate-800 rounded-xl border border-slate-700 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] px-2 py-0.5 font-bold">حرج</div>
+                    <div class="text-3xl mb-2">🔐</div>
+                    <div class="font-bold text-white mb-1">Payment Integration</div>
+                    <div class="text-xs text-slate-400">ربط مباشر (Kurimi/OneCash) مع تشفير عالي.</div>
+                </div>
+            </div>
+        </section>
+
+     
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="mb-8">
+                <span class="text-2xl font-black text-white tracking-tighter">YEMEN<span class="text-orange-500">DEALS</span></span>
+                <p class="mt-2 text-sm text-gray-500">منظومة الاقتصاد الرقمي اليمني 2026</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm mb-12">
+                <div>
+                    <h5 class="text-white font-bold mb-3">المشروع</h5>
+                    <ul class="space-y-2">
+                        <li>الرؤية</li>
+                        <li>الأهداف</li>
+                        <li>المستفيدين</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold mb-3">التقنية</h5>
+                    <ul class="space-y-2">
+                        <li>تطبيق المستخدم</li>
+                        <li>تطبيق التاجر</li>
+                        <li>لوحة الإدارة</li>
+                        <li>Gemini AI ✨</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold mb-3">المالية</h5>
+                    <ul class="space-y-2">
+                        <li>نظام الضامن</li>
+                        <li>المحافظ الإلكترونية</li>
+                        <li>التقارير</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold mb-3">تواصل معنا</h5>
+                    <ul class="space-y-2">
+                        <li>طلب عرض سعر</li>
+                        <li>الشراكات</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-xs text-gray-600">جميع الحقوق محفوظة © 2026 - تم إعداد هذا العرض بناءً على وثيقة الشروط المرجعية المرفقة.</p>
+        </div>
+    </footer>
+
+    <!-- Chart Logic -->
+    <script>
+        // Global Settings
+        Chart.defaults.font.family = "'Tajawal', sans-serif";
+        Chart.defaults.color = '#64748b';
+
+        // 1. Revenue Chart (Impact of Products)
+        const ctxRev = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctxRev, {
+            type: 'doughnut',
+            data: {
+                labels: ['عمولة بيع المنتجات (High Value)', 'عمولة القسائم الخدمية (High Volume)', 'الإعلانات المميزة', 'الاشتراكات'],
+                datasets: [{
+                    data: [45, 35, 15, 5],
+                    backgroundColor: [
+                        '#7c3aed', // Purple for Products
+                        '#2563eb', // Blue for Services
+                        '#f97316', // Orange for Ads
+                        '#06b6d4'  // Cyan for Subs
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { padding: 20, usePointStyle: true } },
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        titleColor: '#0f172a',
+                        bodyColor: '#475569',
+                        borderColor: '#e2e8f0',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: { 
+                            title: (context) => {
+                                const label = context[0].label;
+                                return Array.isArray(label) ? label.join(' ') : label;
+                            }
+                        }
+                    }
+                },
+                cutout: '75%'
+            }
+        });
+
+        // 2. Roadmap & Payment Chart (TOR Compliance)
+        const ctxRoad = document.getElementById('roadmapChart').getContext('2d');
+        new Chart(ctxRoad, {
+            type: 'bar',
+            data: {
+                labels: [
+                    ['م 1-3', 'التحليل والقرار'],
+                    ['م 4-5', 'التصميم والبنية'],
+                    ['م 6', 'التطوير البرمجي'],
+                    ['م 7-8', 'الاختبار والنقل'],
+                    ['م 9-10', 'التشغيل والدعم']
+                ],
+                datasets: [{
+                    label: 'نسبة الدفعة المالية (%)',
+                    data: [10, 20, 20, 30, 20],
+                    backgroundColor: [
+                        '#94a3b8', 
+                        '#94a3b8', 
+                        '#2563eb', // Core Dev
+                        '#7c3aed', // Transfer (Critical)
+                        '#10b981'  // Launch
+                    ],
+                    borderRadius: 6,
+                    barThickness: 40
+                },
+                {
+                    type: 'line',
+                    label: 'الإنجاز التراكمي',
+                    data: [10, 30, 50, 80, 100],
+                    borderColor: '#f97316',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#f97316',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + '%' } },
+                    x: { grid: { display: false } }
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        titleColor: '#0f172a',
+                        bodyColor: '#475569',
+                        borderColor: '#e2e8f0',
+                        borderWidth: 1,
+                        callbacks: { 
+                            title: (context) => {
+                                const label = context[0].label;
+                                return Array.isArray(label) ? label.join(' ') : label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+</html>

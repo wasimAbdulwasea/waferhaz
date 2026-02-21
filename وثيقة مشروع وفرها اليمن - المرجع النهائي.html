@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وثيقة مشروع وفرها (اليمن) | المرجع الفني النهائي 2026</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Identity System --- */
+        :root {
+            --primary: #1e3a8a;       /* Corporate Blue: Trust */
+            --secondary: #f97316;     /* Action Orange: Deals */
+            --product: #7c3aed;       /* Product Purple: Marketplace */
+            --ai: #0ea5e9;            /* AI Sky: Intelligence */
+            --bg-body: #f8fafc;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-body);
+            color: #0f172a;
+            scroll-behavior: smooth;
+        }
+
+        /* UI Components */
+       .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+       .glass-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile Screen Simulation */
+       .mobile-frame {
+            border: 8px solid #1e293b;
+            border-radius: 2rem;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            height: 600px;
+            width: 320px;
+            position: relative;
+            margin: 0 auto;
+        }
+       .mobile-notch {
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 40%; height: 25px;
+            background: #1e293b;
+            border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+            z-index: 20;
+        }
+
+        /* Flowchart Elements */
+       .flow-node {
+            background: white; border: 1px solid #cbd5e1; padding: 1rem; border-radius: 0.5rem;
+            text-align: center; font-weight: bold; position: relative;
+        }
+       .flow-line { flex: 1; height: 2px; background: #94a3b8; position: relative; margin: 0 10px; }
+       .flow-line::after { content: '◀'; position: absolute; left: -5px; top: -6px; color: #94a3b8; font-size: 10px; }
+
+        /* Print Styles */
+        @media print {
+           .no-print { display: none; }
+            body { background: white; color: black; }
+           .glass-panel { box-shadow: none; border: 1px solid #000; }
+        }
+    </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+<body class="antialiased">
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200 no-print">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-800 rounded flex items-center justify-center text-white font-black">W</div>
+                <span class="text-xl font-black text-blue-900">WAFFARHA<span class="text-orange-500">.YE</span></span>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-bold text-gray-600">
+                <a href="#admin" class="hover:text-blue-600">لوحة الإدارة</a>
+                <a href="#merchant" class="hover:text-blue-600">نظام التاجر</a>
+                <a href="#customer" class="hover:text-blue-600">تطبيق العميل</a>
+                <a href="#products" class="hover:text-purple-600 flex items-center gap-1"><i class="ph ph-star"></i> سوق المنتجات</a>
+            </div>
+            <button onclick="window.print()" class="bg-slate-800 text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-slate-700">تصدير PDF</button>
+        </div>
+    </nav>
+
+    <header class="py-16 bg-gradient-to-b from-blue-50 to-white text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">التحليل الفني والتشغيلي المتكامل</h1>
+        <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+            وثيقة تفصيلية تغطي العمليات (Business Logic)، واجهات الاستخدام (UI)، والبنية التحتية (Infrastructure) لنظام "وفرها - اليمن"، بما في ذلك ميزة سوق المنتجات ونظام الضامن.
+        </p>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 space-y-24 pb-20">
+
+        <section id="admin">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-1.5 h-8 bg-blue-800 rounded-full"></span>
+                <h2 class="text-2xl font-bold text-slate-900">أولاً: لوحة تحكم الإدارة (Super Admin)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-panel p-6">
+                    <h3 class="font-bold text-lg text-blue-800 mb-4 flex items-center gap-2">
+                        <i class="ph ph-storefront"></i> 1. إدارة التجار (Merchant Mgmt)
+                    </h3>
+                    <ul class="space-y-3 text-sm text-slate-600 list-disc list-inside">
+                        <li><strong>إضافة متجر (Onboarding):</strong> نموذج شامل (الاسم، الشعار، السجل التجاري، الموقع الجغرافي Lat/Long).</li>
+                        <li><strong>الإعدادات المالية:</strong> تحديد نسبة العمولة (Commission %) أو المبلغ الثابت لكل طلب.</li>
+                        <li><strong>إدارة الفروع:</strong> ربط حساب التاجر الرئيسي بحسابات فرعية (Cashier Accounts) لكل فرع.</li>
+                        <li><strong>التوثيق:</strong> مراجعة واعتماد الوثائق القانونية (KYC) قبل تفعيل الحساب.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-6 border-t-4 border-purple-500">
+                    <h3 class="font-bold text-lg text-purple-800 mb-4 flex items-center gap-2">
+                        <i class="ph ph-handshake"></i> 2. نظام الضامن (Escrow Engine)
+                    </h3>
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-100 mb-4">
+                        <p class="text-xs text-purple-900 font-bold mb-2">منطق العمليات (Logic):</p>
+                        <p class="text-xs text-slate-600">أي مبلغ مدفوع لـ "منتج ملموس" يتم توجيهه لمحفظة وسيطة (Escrow Wallet) ولا يظهر في "الرصيد القابل للسحب" للتاجر إلا بعد تغيير حالة الطلب إلى <span class="bg-green-100 text-green-700 px-1 rounded">Delivered</span>.</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex justify-between"><span>الأموال المجمدة:</span> <span class="font-bold text-orange-500">2,500,000 ريال</span></li>
+                        <li class="flex justify-between"><span>الأموال المحررة:</span> <span class="font-bold text-green-600">1,200,000 ريال</span></li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-6 lg:col-span-2">
+                    <h3 class="font-bold text-lg text-slate-800 mb-4">3. إدارة العروض والمحتوى (Deals & AI)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <i class="ph ph-check-circle text-2xl text-green-500 mb-2"></i>
+                            <div class="font-bold text-sm">اعتماد العروض</div>
+                            <div class="text-xs text-slate-500">مراجعة المحتوى قبل النشر</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <i class="ph ph-warning-circle text-2xl text-red-500 mb-2"></i>
+                            <div class="font-bold text-sm">Kill Switch</div>
+                            <div class="text-xs text-slate-500">إيقاف فوري لعرض مخالف</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <i class="ph ph-sparkle text-2xl text-sky-500 mb-2"></i>
+                            <div class="font-bold text-sm">إعدادات Gemini</div>
+                            <div class="text-xs text-slate-500">ضبط "شخصية" الردود الآلية</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="merchant">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-1.5 h-8 bg-orange-500 rounded-full"></span>
+                <h2 class="text-2xl font-bold text-slate-900">ثانياً: نظام التاجر (Web & App)</h2>
+            </div>
+
+            <div class="glass-panel p-8 bg-slate-900 text-white relative overflow-hidden">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-xl font-bold text-orange-400 mb-4">1. إدارة المنتجات والمخزون (Click & Collect)</h3>
+                        <p class="text-sm text-gray-400 mb-6">واجهة مخصصة لإضافة المنتجات الملموسة (لابتوب، جوال) تختلف عن القسائم.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 bg-slate-800 p-3 rounded-lg border border-slate-700">
+                                <span class="bg-purple-600 text-xs px-2 py-1 rounded">حقل جديد</span>
+                                <div class="text-sm"><strong>الكمية (Stock):</strong> رقم يمثل المخزون الفعلي (مثلاً: 5). يتناقص تلقائياً.</div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-slate-800 p-3 rounded-lg border border-slate-700">
+                                <span class="bg-sky-600 text-xs px-2 py-1 rounded">AI Tool</span>
+                                <div class="text-sm"><strong>وصف المنتج:</strong> زر "توليد وصف" يكتب إعلاناً جذاباً باللهجة اليمنية.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold text-green-400 mb-4">2. عملية التسليم (Handover & Release)</h3>
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-bold text-gray-300">سيناريو الاستلام</span>
+                                <i class="ph ph-qr-code text-2xl"></i>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex gap-2"><span class="text-green-400">1.</span> التاجر يمسح كود الاستلام (Pickup Code) من هاتف العميل.</div>
+                                <div class="flex gap-2"><span class="text-green-400">2.</span> يظهر النظام تفاصيل المنتج + الحالة "مدفوع ومحجوز".</div>
+                                <div class="flex gap-2"><span class="text-green-400">3.</span> يضغط التاجر زر <strong>"تأكيد التسليم"</strong>.</div>
+                                <div class="flex gap-2"><span class="text-green-400">4.</span> النظام يحرر المبلغ فوراً من الـ Escrow إلى المحفظة.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="customer">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="w-1.5 h-8 bg-purple-600 rounded-full"></span>
+                <h2 class="text-2xl font-bold text-slate-900">ثالثاً: تطبيق العميل (تفصيل شاشة "مشترياتي")</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="glass-panel p-6">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">منطق العرض (Display Logic)</h3>
+                        <p class="text-sm text-slate-600 mb-4">يجب الفصل بصرياً ووظيفياً بين "قسائم الخصم" و "طلبات المنتجات" لأن الإجراء المطلوب مختلف.</p>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-center gap-2">
+                                <i class="ph ph-ticket text-orange-500"></i>
+                                <span><strong>القسائم:</strong> تظهر كود QR عادي، يمكن استخدامها جزئياً (حسب الشروط)، حالة "نشط".</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="ph ph-package text-purple-600"></i>
+                                <span><strong>المنتجات:</strong> تظهر كود استلام (Secure Pickup Code)، حالة "مدفوع - بانتظار الاستلام"، زر "تتبع/خريطة".</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-panel p-6 border-l-4 border-sky-500">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">البحث الذكي (Smart Search)</h3>
+                        <p class="text-sm text-slate-600">بدلاً من الفلاتر المعقدة، يمكن للمستخدم كتابة: <em>"أشتي لابتوب للدراسة وسعره معقول في صنعاء"</em>، وسيقوم النظام بعرض منتجات "سوق المنتجات" المناسبة.</p>
+                    </div>
+                </div>
+
+                <div class="mobile-frame flex flex-col">
+                    <div class="mobile-notch"></div>
+                    <div class="h-8 w-full bg-slate-50"></div> 
+
+                    <div class="bg-white p-4 pt-6 shadow-sm z-10">
+                        <h2 class="text-xl font-black text-slate-800">مشترياتي</h2>
+                        <div class="flex mt-4 bg-slate-100 p-1 rounded-lg">
+                            <button class="flex-1 bg-white shadow-sm text-blue-900 py-1.5 rounded-md text-xs font-bold transition">الكل</button>
+                            <button class="flex-1 text-slate-500 py-1.5 rounded-md text-xs font-medium hover:bg-white/50 transition">القسائم</button>
+                            <button class="flex-1 text-slate-500 py-1.5 rounded-md text-xs font-medium hover:bg-white/50 transition">المنتجات</button>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+                        
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-purple-100 relative overflow-hidden group hover:shadow-md transition">
+                            <div class="absolute top-0 left-0 bg-purple-600 text-white text-[9px] font-bold px-2 py-1 rounded-br-lg">استلام من المتجر</div>
+                            <div class="flex gap-3">
+                                <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center text-2xl">💻</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm text-slate-800">MacBook Air M2</h4>
+                                    <p class="text-[10px] text-slate-500 mb-2">عالم التقنية - شارع حدة</p>
+                                    <div class="flex justify-between items-end">
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] text-slate-400">الحالة</span>
+                                            <span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i class="ph ph-lock-key"></i> مدفوع (ضمان)</span>
+                                        </div>
+                                        <button class="bg-purple-100 text-purple-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-200 transition">كود الاستلام</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-orange-100 relative overflow-hidden hover:shadow-md transition">
+                            <div class="flex gap-3">
+                                <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center text-2xl">🍕</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm text-slate-800">وجبة عائلية (5 أشخاص)</h4>
+                                    <p class="text-[10px] text-slate-500 mb-2">مطعم الشيباني رويال</p>
+                                    <div class="flex justify-between items-end">
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] text-slate-400">صالح حتى</span>
+                                            <span class="text-xs font-bold text-slate-700">20 فبراير 2026</span>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button class="bg-orange-50 text-orange-600 p-1.5 rounded-lg text-xs"><i class="ph ph-gift"></i></button>
+                                            <button class="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-bold">QR Code</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-100 p-3 rounded-2xl border border-slate-200 opacity-60">
+                            <div class="flex gap-3">
+                                <div class="w-16 h-16 bg-slate-200 rounded-xl flex items-center justify-center text-2xl grayscale">🎡</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm text-slate-600">تذكرة دخول الملاهي</h4>
+                                    <div class="mt-4 flex items-center gap-1 text-red-500 text-xs font-bold">
+                                        <i class="ph ph-warning-circle"></i> منتهي الصلاحية
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="h-14 bg-white border-t flex justify-around items-center text-slate-400 text-xs">
+                        <div class="flex flex-col items-center gap-1"><i class="ph ph-house text-lg"></i>الرئيسية</div>
+                        <div class="flex flex-col items-center gap-1"><i class="ph ph-magnifying-glass text-lg"></i>بحث</div>
+                        <div class="flex flex-col items-center gap-1 text-blue-600 font-bold"><i class="ph ph-receipt text-lg"></i>مشترياتي</div>
+                        <div class="flex flex-col items-center gap-1"><i class="ph ph-user text-lg"></i>حسابي</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
+        <p>© 2026 مشروع وفرها (اليمن). جميع الحقوق محفوظة.</p>
+        <p class="mt-2 text-xs opacity-50">تم إنشاء هذا المستند بناءً على الشروط المرجعية (TOR) والتحليل الفني.</p>
+    </footer>
+
+    <script>
+        Chart.defaults.font.family = "'Tajawal', sans-serif";
+        const ctx = document.getElementById('finalRoadmapChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['التحليل (10%)', 'التصميم (20%)', 'التطوير الأساسي (20%)', 'سوق المنتجات (Escrow) (10%)', 'الاختبار (20%)', 'التشغيل (20%)'],
+                datasets: [{
+                    label: 'توزيع الميزانية',
+                    data: [10, 20, 20, 10, 20, 20],
+                    backgroundColor: ['#94a3b8', '#60a5fa', '#2563eb', '#7c3aed', '#f97316', '#10b981'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100 } },
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAFFARHA.YE | نسخة الطباعة الرسمية</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Changa:wght@500;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        @page {
+            size: A4;
+            margin: 18mm 15mm
+        }
+
+        body {
+            font-family: "Tajawal", sans-serif;
+            color: #0f172a;
+            background: #fff;
+            font-size: 11pt;
+            line-height: 1.7
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: "Changa", sans-serif;
+            letter-spacing: .1px
+        }
+
+        .page {
+            page-break-after: always;
+            padding: 0;
+            position: relative;
+            min-height: auto
+        }
+
+        .page:last-child {
+            page-break-after: avoid
+        }
+
+        /* header */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #0c63a8;
+            padding-bottom: 12px;
+            margin-bottom: 20px
+        }
+
+        .doc-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .doc-header .logo .icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #06b6d4, #10b981);
+            color: #fff;
+            font-weight: 900;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px
+        }
+
+        .doc-header .brand {
+            font-family: "Changa", sans-serif;
+            font-size: 18pt;
+            font-weight: 800;
+            color: #0a274d
+        }
+
+        .doc-header .brand span {
+            color: #f59e0b
+        }
+
+        .doc-header .meta {
+            text-align: left;
+            font-size: 8pt;
+            color: #64748b
+        }
+
+        .page-title {
+            font-size: 18pt;
+            color: #0c63a8;
+            margin-bottom: 6px
+        }
+
+        .page-sub {
+            font-size: 10pt;
+            color: #475569;
+            margin-bottom: 14px;
+            line-height: 1.6
+        }
+
+        /* cards */
+        .print-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #f8fafc
+        }
+
+        .print-card h4 {
+            font-size: 11pt;
+            color: #0f172a;
+            margin-bottom: 4px
+        }
+
+        .print-card p {
+            font-size: 9.5pt;
+            color: #475569;
+            line-height: 1.6
+        }
+
+        /* metrics */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px
+        }
+
+        .metric-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            background: #fff
+        }
+
+        .metric-box .num {
+            font-family: "Changa", sans-serif;
+            font-size: 22pt;
+            font-weight: 800;
+            color: #0c63a8
+        }
+
+        .metric-box .label {
+            font-size: 8pt;
+            color: #64748b;
+            font-weight: 700
+        }
+
+        /* images */
+        .img-grid {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 14px
+        }
+
+        .img-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        .img-grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .img-grid img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0
+        }
+
+        /* table */
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5pt;
+            margin-bottom: 14px
+        }
+
+        .spec-table th {
+            background: #0c63a8;
+            color: #fff;
+            padding: 8px 10px;
+            text-align: right;
+            font-weight: 700
+        }
+
+        .spec-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #e2e8f0
+        }
+
+        .spec-table tr:nth-child(even) {
+            background: #f8fafc
+        }
+
+        /* footer */
+        .page-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 24px;
+            font-size: 7.5pt;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15mm;
+            border-top: 1px solid #e2e8f0
+        }
+
+        /* flow */
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+            flex-wrap: wrap
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 90px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-size: 8.5pt;
+            background: #fff
+        }
+
+        .flow-step.highlight {
+            border-color: #f59e0b;
+            background: #fffbeb
+        }
+
+        .flow-arrow {
+            font-size: 14pt;
+            color: #94a3b8
+        }
+
+        /* chips */
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px
+        }
+
+        .chip {
+            display: inline-block;
+            background: #ecfeff;
+            border: 1px solid #bae6fd;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 8pt;
+            font-weight: 700;
+            color: #0c4a6e
+        }
+
+        @media screen {
+            body {
+                max-width: 210mm;
+                margin: 0 auto;
+                padding: 20px;
+                background: #e2e8f0
+            }
+
+            .page {
+                background: #fff;
+                padding: 18mm 15mm;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+                border-radius: 4px
+            }
+        }
+    </style>
+
+    <!-- Print helper injected for printable copy -->
+    <style id="codex-print-helper">
+        @page { size: A4; margin: 12mm; }
+        @media print {
+            *, *::before, *::after {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+            }
+            body {
+                overflow: visible !important;
+            }
+            .print-helper-btn {
+                display: none !important;
+            }
+        }
+
+        .print-helper-btn {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            background: #0f172a;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <link rel="stylesheet" href="./print-override.css">
+</head>
+
+<body>
+
+    <!-- ═══ PAGE 1: COVER ═══ -->
+    <div class="page">
+        <div class="doc-header">
+            <div class="logo">
+                <div class="icon">W</div>
+                <div class="brand">WAFFARHA<span>.YE</span></div>
+            </div>
+            <div class="meta">وثيقة سرية<br>فبراير 2026 | النسخة 2.0</div>
+        </div>
+        <div style="text-align:center;padding:40px 0 30px">
+            <h1 style="font-size:28pt;color:#0a274d;margin-bottom:8px">عرض تنفيذي لل........</h1>
+            <p style="font-size:14pt;color:#475569;max-width:500px;margin:0 auto">منصة وفرها اليمن: أول منصة يمنية تدمج
+                بين توفير الخدمات وبيع المنتجات المضمون عبر Escrow</p>
+        </div>
+        <div class="metrics-row">
+            <div class="metric-box">
+                <div class="num">27%</div>
+                <div class="label">نمو المحافظ الإلكترونية</div>
+            </div>
+            <div class="metric-box">
+                <div class="num">10</div>
+                <div class="label">مراحل تنفيذ</div>
+            </div>
+            <div class="metric-box">
+                <div class="num">3</div>
+                <div class="label">أنظمة تشغيل</div>
+            </div>
+            <div class="metric-box">
+                <div class="num" style="color:#f59e0b">99.9%</div>
+                <div class="label">هدف الجاهزية</div>
+            </div>
+        </div>
+        <div class="chip-row">
+            <span class="chip">قسائم رقمية</span><span class="chip">Click & Collect</span><span class="chip">Escrow
+                System</span><span class="chip">Gemini AI</span><span class="chip">الكريمي / OneCash / جوالي</span>
+        </div>
+        <div class="img-grid cols-2">
+            <img src="img/app-home.png" alt="App Home">
+            <img src="img/app-purchases.png" alt="Purchases">
+        </div>
+        <div class="print-card">
+            <h4>ملخص المشروع</h4>
+            <p>إنشاء منصة رقمية يمنية متكاملة تتيح للمستخدمين شراء خدمات بخصومات حصرية ومنتجات ملموسة عبر نظام الضامن
+                المالي (Escrow)، مع تكامل الذكاء الاصطناعي Gemini وبوابات الدفع المحلية.</p>
+        </div>
+    </div>
+
+    <!-- ═══ PAGE 2: SCOPE & ARCHITECTURE ═══ -->
+    <div class="page">
+        <div class="doc-header">
+            <div class="logo">
+                <div class="icon">W</div>
+                <div class="brand">WAFFARHA<span>.YE</span></div>
+            </div>
+            <div class="meta">الصفحة 2 | النطاق والبنية</div>
+        </div>
+        <h2 class="page-title">نطاق المشروع والبنية التقنية</h2>
+        <p class="page-sub">تجميع كل محاور BRD / SRS / SDD داخل منظومة تشغيلية واحدة جاهزة للتنفيذ.</p>
+
+        <table class="spec-table">
+            <tr>
+                <th>المحور</th>
+                <th>التفاصيل</th>
+            </tr>
+            <tr>
+                <td><strong>الإدارة</strong></td>
+                <td>KYC، العقود، ضبط العمولات، إدارة المنازعات، مراقبة المحتوى، التقارير المالية</td>
+            </tr>
+            <tr>
+                <td><strong>التاجر</strong></td>
+                <td>إدارة العروض والمنتجات، مسح Pickup QR، تأكيد التسليم، مؤشرات الأداء</td>
+            </tr>
+            <tr>
+                <td><strong>العميل</strong></td>
+                <td>شراء، إهداء، تتبع مشتريات، QR Code، واجهة «مشترياتي» المفصّلة</td>
+            </tr>
+            <tr>
+                <td><strong>الحماية المالية</strong></td>
+                <td>حجز المبالغ في Escrow حتى التحقق من الاستلام الفعلي</td>
+            </tr>
+            <tr>
+                <td><strong>Gemini AI</strong></td>
+                <td>مساعد بحث ذكي للمستخدم + مولد محتوى تسويقي للتاجر</td>
+            </tr>
+        </table>
+
+        <h3 style="font-size:12pt;margin-bottom:8px">البنية التقنية</h3>
+        <img src="img/system-architecture.png" alt="Architecture"
+            style="width:100%;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:12px">
+
+        <table class="spec-table">
+            <tr>
+                <th>الطبقة</th>
+                <th>التقنية</th>
+                <th>الوصف</th>
+            </tr>
+            <tr>
+                <td>Mobile</td>
+                <td>Flutter</td>
+                <td>تطبيقات iOS + Android</td>
+            </tr>
+            <tr>
+                <td>Backend</td>
+                <td>Node.js</td>
+                <td>Microservices Architecture</td>
+            </tr>
+            <tr>
+                <td>Database</td>
+                <td>PostgreSQL</td>
+                <td>قاعدة بيانات علائقية</td>
+            </tr>
+            <tr>
+                <td>AI</td>
+                <td>Gemini API</td>
+                <td>ذكاء اصطناعي توليدي</td>
+            </tr>
+            <tr>
+                <td>Payment</td>
+                <td>Kurimi/OneCash</td>
+                <td>بوابات دفع محلية</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ PAGE 3: INTERFACES ═══ -->
+    <div class="page">
+        <div class="doc-header">
+            <div class="logo">
+                <div class="icon">W</div>
+                <div class="brand">WAFFARHA<span>.YE</span></div>
+            </div>
+            <div class="meta">الصفحة 3 | الواجهات</div>
+        </div>
+        <h2 class="page-title">الواجهات التخيلية للمنظومة</h2>
+        <p class="page-sub">صور تخيلية عالية الدقة لتطبيق العميل ولوحات التحكم.</p>
+
+        <div class="img-grid cols-3">
+            <div><img src="img/app-home.png" alt="Home">
+                <p style="text-align:center;font-size:8pt;color:#64748b;margin-top:4px">الشاشة الرئيسية</p>
+            </div>
+            <div><img src="img/app-purchases.png" alt="Purchases">
+                <p style="text-align:center;font-size:8pt;color:#64748b;margin-top:4px">مشترياتي</p>
+            </div>
+            <div><img src="img/payment-checkout.png" alt="Payment">
+                <p style="text-align:center;font-size:8pt;color:#64748b;margin-top:4px">الدفع والضمان</p>
+            </div>
+        </div>
+        <div class="img-grid cols-2">
+            <div><img src="img/admin-dashboard.png" alt="Admin">
+                <p style="text-align:center;font-size:8pt;color:#64748b;margin-top:4px">لوحة تحكم الإدارة</p>
+            </div>
+            <div><img src="img/merchant-panel.png" alt="Merchant">
+                <p style="text-align:center;font-size:8pt;color:#64748b;margin-top:4px">نظام التاجر</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ PAGE 4: ESCROW & FINANCE ═══ -->
+    <div class="page">
+        <div class="doc-header">
+            <div class="logo">
+                <div class="icon">W</div>
+                <div class="brand">WAFFARHA<span>.YE</span></div>
+            </div>
+            <div class="meta">الصفحة 4 | Escrow والمالية</div>
+        </div>
+        <h2 class="page-title">التدفق المالي Escrow</h2>
+        <p class="page-sub">نظام الوسيط الضامن: حماية كاملة للمشتري والتاجر.</p>
+
+        <img src="img/escrow-flow.png" alt="Escrow Flow"
+            style="width:100%;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:14px">
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+            <div class="print-card">
+                <h4>Financial Split</h4>
+                <p>50,000 ريال → 45,000 للتاجر + 5,000 عمولة (10%)</p>
+            </div>
+            <div class="print-card">
+                <h4>Dispute Window</h4>
+                <p>نافذة نزاع موثقة قبل التسوية النهائية</p>
+            </div>
+            <div class="print-card">
+                <h4>Atomic Consistency</h4>
+                <p>تناسق قفل المخزون وحالة الطلب</p>
+            </div>
+        </div>
+
+        <h2 class="page-title">الخطة المالية والزمنية</h2>
+        <p class="page-sub">توزيع الدفعات: 10% → 20% → 20% → 30% → 20%</p>
+
+        <table class="spec-table">
+            <tr>
+                <th>المرحلة</th>
+                <th>المحتوى</th>
+                <th>الدفعة</th>
+                <th>التقدم التراكمي</th>
+            </tr>
+            <tr>
+                <td>م 1-3</td>
+                <td>التحليل واتخاذ القرار</td>
+                <td>10%</td>
+                <td>10%</td>
+            </tr>
+            <tr>
+                <td>م 4-5</td>
+                <td>التصميم وتجربة المستخدم</td>
+                <td>20%</td>
+                <td>30%</td>
+            </tr>
+            <tr>
+                <td>م 6</td>
+                <td>التطوير البرمجي</td>
+                <td>20%</td>
+                <td>50%</td>
+            </tr>
+            <tr>
+                <td>م 7-8</td>
+                <td>الاختبار والنقل</td>
+                <td>30%</td>
+                <td>80%</td>
+            </tr>
+            <tr>
+                <td>م 9-10</td>
+                <td>التشغيل والصيانة</td>
+                <td>20%</td>
+                <td>100%</td>
+            </tr>
+        </table>
+
+        <div class="print-card" style="text-align:center;background:#0a274d;color:#e2e8f0;border:none">
+            <p style="color:#94a3b8">© 2026 WAFFARHA.YE | جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+
+
+    <button type="button" class="print-helper-btn" onclick="window.print()">طباعة هذه الصفحة</button>
+</body>
+
+</html>
